@@ -5,800 +5,742 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>蛇の巫女 カード帳</title>
 <meta name="description" content="Slay the Spire 2 のMOD「蛇の巫女」の全カードのイラストと効果。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
 <style>
-/* ゲーム内のカードに寄せる：紫の枠、レアリティ色の名前帯、左上のエナジー玉、金枠の絵、種類の札。
-   キーワードは金色、強化後の値は緑。背景はゲームのメニューのような暗い灰紫 */
+/* 飾らないカード一覧。端末の標準フォント、白地（ダークモードでは黒地）、絵と文字だけ */
 :root{
-  --bg:#1c1a22; --bg-2:#262330; --text:#f1edf7; --dim:#a7a1b5;
-  --frame:#4b3f78; --frame-dark:#2a2247; --frame-light:#6f5fa8;
-  --desc:#352c58; --gold:#efc451; --gold-dark:#8a6516; --up:#7ee07a;
-  --plate:#d8ccb0; --plate-ink:#3a3226;
-  --b-basic:#8d8a93; --b-common:#8d8a93; --b-uncommon:#4f8fd6; --b-rare:#e0ad3a; --b-ancient:#d0506e;
-  --font:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Yu Gothic",system-ui,sans-serif;
-  color-scheme:dark;
+  --bg:#ffffff; --text:#1f1f1f; --sub:#6a6a6a; --line:#e3e3e3; --chip:#f2f2f2; --up:#1d7f35;
+  color-scheme:light;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
+@media (prefers-color-scheme:dark){:root{--bg:#161616; --text:#e8e8e8; --sub:#9a9a9a; --line:#2e2e2e; --chip:#242424; --up:#6fd38a; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
-body{margin:0;color:var(--text);font-family:var(--font);font-weight:500;line-height:1.55}
+body{margin:0;color:var(--text);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;line-height:1.6}
 img{max-width:100%}
 [hidden]{display:none!important}
-.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
-
-/* 文字のふち取り（ゲームの見出しのような黒い縁） */
-.stroke{-webkit-text-stroke:5px #16121f;paint-order:stroke fill}
-
-header h1{margin:0;font-weight:800;font-size:clamp(1.7rem,4.2vw,2.4rem);line-height:1.2;color:var(--text)}
-header p{margin:6px 0 0;font-size:.82rem;color:var(--dim)}
-header p .up{color:var(--up)}
-
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:18px;padding-block:10px;
-  display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-bottom:2px solid var(--bg-2)}
+.wrap{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+h1{margin:0;font-size:1.5rem}
+.lead{margin:4px 0 0;font-size:.85rem;color:var(--sub)}
+.up{color:var(--up)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:16px;padding-block:10px;border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-.tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--bg-2);padding:3px;border-radius:9px}
-.tabs button{font:inherit;font-size:.84rem;background:none;border:0;color:var(--dim);padding:4px 10px;border-radius:7px;cursor:pointer}
-.tabs button:hover{color:var(--text)}
-.tabs button[aria-pressed="true"]{background:var(--frame);color:var(--text);box-shadow:inset 0 0 0 1px var(--frame-light)}
-.tabs button:focus-visible,#q:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-#q{font:inherit;font-size:.84rem;background:var(--bg-2);color:var(--text);border:0;border-radius:9px;padding:7px 12px;min-width:0;flex:1 1 170px;max-width:260px}
-#q::placeholder{color:var(--dim)}
-.shown{font-size:.8rem;color:var(--dim);font-variant-numeric:tabular-nums;margin-left:auto}
-
-.sec{margin-top:34px}
-.sec h2{margin:0 0 22px;font-weight:800;font-size:1.3rem;display:flex;align-items:baseline;gap:10px}
-.sec h2 small{font-size:.8rem;font-weight:500;color:var(--dim)}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:30px 18px}
-
-/* --- カード --- */
-.card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;
-  background:var(--frame);border:3px solid var(--frame-dark);border-radius:16px;padding:22px 12px 10px;
-  box-shadow:inset 0 0 0 2px var(--frame-light),0 6px 0 var(--frame-dark)}
-.r-basic,.r-common{--band:var(--b-common)}.r-uncommon{--band:var(--b-uncommon)}.r-rare{--band:var(--b-rare)}.r-ancient{--band:var(--b-ancient)}
-
-.cost{position:absolute;left:-12px;top:-14px;z-index:2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
-  font-weight:800;font-size:1.45rem;color:#fff;-webkit-text-stroke:4px #1a1030;paint-order:stroke fill;
-  background:radial-gradient(circle at 38% 32%,#b9a2f0 0%,#7354c4 38%,#3d2a7c 100%);
-  border:3px solid #1a1030;box-shadow:0 0 0 2px #cdb9ff inset}
-.cost i{position:absolute;right:-8px;bottom:-6px;font-style:normal;font-size:.8rem;width:22px;height:22px;border-radius:50%;
-  display:grid;place-items:center;background:#2a5a2a;color:var(--up);-webkit-text-stroke:0;border:2px solid #1a1030}
-
-.banner{position:absolute;top:-12px;left:22px;right:-8px;z-index:1;margin:0;height:34px;display:grid;place-items:center;
-  background:var(--band);border:3px solid #1a1030;border-radius:6px;
-  clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%)}
-.banner span{font-weight:800;font-size:1.05rem;color:#fff;-webkit-text-stroke:4px #1a1030;paint-order:stroke fill;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92%;padding-left:10px}
-
-.art{width:100%;aspect-ratio:250/190;max-width:100%;background:#241c3c;border:4px solid #d99a32;border-radius:6px;
-  box-shadow:0 0 0 2px #1a1030;overflow:hidden;margin-top:6px}
-.art img{width:100%;height:100%;object-fit:cover;display:block}
-.noart{display:grid;place-items:center;height:100%;color:var(--dim);font-size:.8rem}
-
-.plate{margin-top:-11px;z-index:1;background:var(--plate);color:var(--plate-ink);font-weight:800;font-size:.76rem;
-  padding:1px 14px;border-radius:5px;border:2px solid #1a1030}
-.t-attack .plate{background:#e5c2b8}.t-power .plate{background:#d6c8ea}
-
-.fx{flex:1;width:100%;margin:8px 0 0;padding:10px 10px;background:var(--desc);border-radius:8px;text-align:center;
-  font-size:.88rem;line-height:1.65;display:flex;flex-direction:column;justify-content:center}
-.fx b{color:var(--gold);font-weight:800}
-.up{color:var(--up);font-weight:800}
-.note{margin:7px 0 0;font-size:.72rem;color:#c6bde0}
-.r-rare .note,.r-ancient .note{color:var(--band)}
-
-.foot{margin-top:48px;font-size:.76rem;color:var(--dim)}
-@media (max-width:520px){
-  .grid{grid-template-columns:1fr 1fr;gap:26px 12px}
-  .card{padding:20px 7px 8px;border-radius:12px}
-  .banner{left:16px;right:-4px;height:28px}.banner span{font-size:.8rem;-webkit-text-stroke:3px #1a1030}
-  .cost{width:34px;height:34px;font-size:1.1rem;left:-8px;top:-12px}
-  .fx{font-size:.76rem;padding:8px 6px}
-}
-@media (max-width:340px){.grid{grid-template-columns:1fr}}
+.tabs{display:flex;flex-wrap:wrap;gap:4px}
+.tabs button{font:inherit;font-size:.85rem;background:var(--chip);color:var(--text);border:1px solid var(--line);border-radius:4px;padding:2px 10px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+#q{font:inherit;font-size:.85rem;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:4px;padding:3px 8px;min-width:0;flex:1 1 160px;max-width:240px}
+.shown{font-size:.8rem;color:var(--sub);margin-left:auto}
+.sec{margin-top:28px}
+.sec h2{margin:0 0 4px;font-size:1.1rem}
+.card{display:grid;grid-template-columns:132px 1fr;gap:14px;padding-block:12px;border-bottom:1px solid var(--line)}
+.card img,.noart{width:132px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
+.noart{display:grid;place-items:center;background:var(--chip);color:var(--sub);font-size:.75rem}
+.info{min-width:0}
+.card h3{margin:0;font-size:1rem}
+.meta{margin:0;font-size:.8rem;color:var(--sub)}
+.fx{margin:4px 0 0;font-size:.92rem}
+.foot{margin-top:40px;font-size:.75rem;color:var(--sub)}
+@media (max-width:480px){.card{grid-template-columns:96px 1fr;gap:10px}.card img,.noart{width:96px}.fx{font-size:.86rem}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <h1 class="stroke">蛇の巫女 カード帳</h1>
-  <p>Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新　<span class="up">緑のかっこ</span>は強化後の値</p>
-</header>
+<h1>蛇の巫女 カード帳</h1>
+<p class="lead">Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新</p>
 <nav class="bar" aria-label="絞り込み">
   <div class="tabs" id="fr"><button type="button" data-v="all" aria-pressed="true">すべて</button><button type="button" data-v="basic" aria-pressed="false">基本</button><button type="button" data-v="common" aria-pressed="false">コモン</button><button type="button" data-v="uncommon" aria-pressed="false">アンコモン</button><button type="button" data-v="rare" aria-pressed="false">レア</button><button type="button" data-v="ancient" aria-pressed="false">エンシェント</button></div>
   <div class="tabs" id="ft"><button type="button" data-v="all" aria-pressed="true">全種類</button><button type="button" data-v="attack" aria-pressed="false">アタック</button><button type="button" data-v="skill" aria-pressed="false">スキル</button><button type="button" data-v="power" aria-pressed="false">パワー</button></div>
   <input id="q" type="search" placeholder="名前・効果で探す（例：破滅）" aria-label="名前・効果で探す">
   <span class="shown" id="shown"></span>
 </nav>
-<section class="sec" data-sec="basic"><h2>基本<small>4枚</small></h2><div class="grid">
-<article class="card r-basic t-attack" data-rarity="basic" data-type="attack" data-name="ストライク" data-text="6（強化 9）ダメージを与える。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>ストライク</span></h3>
-  <div class="art"><img src="img/strike_snake_miko.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>6<span class="up">（9）</span>ダメージを与える。</span></div>
-  <p class="note">基本・初期デッキに3枚</p>
-</article>
-<article class="card r-basic t-skill" data-rarity="basic" data-type="skill" data-name="防御" data-text="5（強化 8）ブロックを得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>防御</span></h3>
-  <div class="art"><img src="img/defend_snake_miko.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>5<span class="up">（8）</span><b>ブロック</b>を得る。</span></div>
-  <p class="note">基本・初期デッキに5枚</p>
-</article>
-<article class="card r-basic t-attack" data-rarity="basic" data-type="attack" data-name="毒蛇" data-text="3（強化 5）ダメージを与える。 毒 4（強化 5）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒蛇</span></h3>
-  <div class="art"><img src="img/venom_fang.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>3<span class="up">（5）</span>ダメージを与える。<br><b>毒</b> 4<span class="up">（5）</span>を付与する。</span></div>
-  <p class="note">基本</p>
-</article>
-<article class="card r-basic t-skill" data-rarity="basic" data-type="skill" data-name="祟り" data-text="破滅 6（強化 8）を2回付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>祟り</span></h3>
-  <div class="art"><img src="img/tatari.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 6<span class="up">（8）</span>を2回付与する。</span></div>
-  <p class="note">基本</p>
-</article></div></section><section class="sec" data-sec="common"><h2>コモン<small>20枚</small></h2><div class="grid">
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="毒霧" data-text="すべての敵に毒 3（強化 4）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒霧</span></h3>
-  <div class="art"><img src="img/poison_mist.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>すべての敵に<b>毒</b> 3<span class="up">（4）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="滴る毒液" data-text="毒 5（強化 7）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>滴る毒液</span></h3>
-  <div class="art"><img src="img/dripping_venom.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>毒</b> 5<span class="up">（7）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="呪詛" data-text="破滅 14（強化 18）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪詛</span></h3>
-  <div class="art"><img src="img/juso.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 14<span class="up">（18）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="怨嗟の牙" data-text="5（強化 7）ダメージを与える。 破滅 8（強化 10）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>怨嗟の牙</span></h3>
-  <div class="art"><img src="img/grudge_fang.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>5<span class="up">（7）</span>ダメージを与える。<br><b>破滅</b> 8<span class="up">（10）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="噛みつき" data-text="2（強化 3）ダメージを与える。 毒 1（強化 2）を付与する。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>噛みつき</span></h3>
-  <div class="art"><img src="img/nibble.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>2<span class="up">（3）</span>ダメージを与える。<br><b>毒</b> 1<span class="up">（2）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="小さな呪い" data-text="破滅 7（強化 9）を付与する。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>小さな呪い</span></h3>
-  <div class="art"><img src="img/petty_curse.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 7<span class="up">（9）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="とぐろを巻く" data-text="9（強化 11）ブロックを得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>とぐろを巻く</span></h3>
-  <div class="art"><img src="img/coil.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>9<span class="up">（11）</span><b>ブロック</b>を得る。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="毒針" data-text="6（強化 8）ダメージを与える。 この敵が毒を持っていれば、毒 4（強化 5）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒針</span></h3>
-  <div class="art"><img src="img/poison_needle.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>6<span class="up">（8）</span>ダメージを与える。<br>この敵が<b>毒</b>を持っていれば、<b>毒</b> 4<span class="up">（5）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="二股の舌" data-text="毒 2（強化 3）を2回付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>二股の舌</span></h3>
-  <div class="art"><img src="img/forked_tongue.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>毒</b> 2<span class="up">（3）</span>を2回付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="呪いの囁き" data-text="すべての敵に破滅 9（強化 11）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪いの囁き</span></h3>
-  <div class="art"><img src="img/cursed_whisper.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>すべての敵に<b>破滅</b> 9<span class="up">（11）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="締め上げ" data-text="7（強化 9）ダメージを与える。 この敵の破滅がHPの半分以上なら、もう一度 7（強化 9）ダメージを与える。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>締め上げ</span></h3>
-  <div class="art"><img src="img/constrict.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>7<span class="up">（9）</span>ダメージを与える。<br>この敵の<b>破滅</b>がHPの半分以上なら、もう一度 7<span class="up">（9）</span>ダメージを与える。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="トリプルストライク" data-text="3（強化 4）ダメージを3回与える。 （ストライク）">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>トリプルストライク</span></h3>
-  <div class="art"><img src="img/triple_strike.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>3<span class="up">（4）</span>ダメージを3回与える。<br>（ストライク）</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="鱗を立てる" data-text="このターン、敏捷 3 を得る。 5（強化 8）ブロックを得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>鱗を立てる</span></h3>
-  <div class="art"><img src="img/raise_scales.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>このターン、<b>敏捷</b> 3 を得る。<br>5<span class="up">（8）</span><b>ブロック</b>を得る。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="毒の帳" data-text="5（強化 7）ブロックを得る。 ランダムな敵に毒 2（強化 3）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒の帳</span></h3>
-  <div class="art"><img src="img/venom_veil.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>5<span class="up">（7）</span><b>ブロック</b>を得る。<br>ランダムな敵に<b>毒</b> 2<span class="up">（3）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="呪縛の壁" data-text="6（強化 7）ブロックを得る。 破滅 6（強化 8）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪縛の壁</span></h3>
-  <div class="art"><img src="img/binding_wall.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>6<span class="up">（7）</span><b>ブロック</b>を得る。<br><b>破滅</b> 6<span class="up">（8）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="尾撃" data-text="2（強化 3）ダメージを与える。 活力 4（強化 5）を得る。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>尾撃</span></h3>
-  <div class="art"><img src="img/tail_strike.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>2<span class="up">（3）</span>ダメージを与える。<br><b>活力</b> 4<span class="up">（5）</span>を得る。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="白衣の加護" data-text="2（強化 4）ブロックを得る。 破滅を持つ敵がいれば、さらに 3 ブロックを得る。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>白衣の加護</span></h3>
-  <div class="art"><img src="img/shrine_garb.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>2<span class="up">（4）</span><b>ブロック</b>を得る。<br><b>破滅</b>を持つ敵がいれば、さらに 3 <b>ブロック</b>を得る。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="舌先" data-text="カードを1枚引く。 ランダムな敵に毒 1（強化 2）を付与する。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>舌先</span></h3>
-  <div class="art"><img src="img/tongue_tip.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>カードを1枚引く。<br>ランダムな敵に<b>毒</b> 1<span class="up">（2）</span>を付与する。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-skill" data-rarity="common" data-type="skill" data-name="蛇の目" data-text="カードを 2（強化 3）枚引く。 手札の毒か破滅を付与するカードを1枚アップグレードする。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>蛇の目</span></h3>
-  <div class="art"><img src="img/serpent_eye.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>カードを 2<span class="up">（3）</span>枚引く。<br>手札の<b>毒</b>か<b>破滅</b>を付与するカードを1枚アップグレードする。</span></div>
-  <p class="note">コモン</p>
-</article>
-<article class="card r-common t-attack" data-rarity="common" data-type="attack" data-name="毒噛み" data-text="この敵の毒に等しいダメージを与える（毒は減らない）。 戦闘中は実際のダメージを表示。">
-  <div class="cost" title="コスト（強化で1）">2<i>1</i></div>
-  <h3 class="banner"><span>毒噛み</span></h3>
-  <div class="art"><img src="img/venom_bite.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>この敵の<b>毒</b>に等しいダメージを与える（<b>毒</b>は減らない）。<br>戦闘中は実際のダメージを表示。</span></div>
-  <p class="note">コモン</p>
-</article></div></section><section class="sec" data-sec="uncommon"><h2>アンコモン<small>36枚</small></h2><div class="grid">
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="脱皮" data-text="HPを 3（強化 5）回復する。 最大HPを1増やす。 廃棄。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>脱皮</span></h3>
-  <div class="art"><img src="img/molt.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>HPを 3<span class="up">（5）</span>回復する。<br>最大HPを1増やす。<br><b>廃棄</b>。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="蛇毒の巡り" data-text="ターン開始時、ランダムな敵に毒 1 を 4（強化 5）回付与する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>蛇毒の巡り</span></h3>
-  <div class="art"><img src="img/venom_circulation.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>ターン開始時、ランダムな敵に<b>毒</b> 1 を 4<span class="up">（5）</span>回付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="鱗の守り" data-text="毒か破滅を付与するカードをプレイするたび、2（強化 3）ブロックを得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>鱗の守り</span></h3>
-  <div class="art"><img src="img/scale_guard.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>毒</b>か<b>破滅</b>を付与するカードをプレイするたび、2<span class="up">（3）</span><b>ブロック</b>を得る。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="呑み込む" data-text="9（強化 12）ダメージに加え、敵の破滅の半分（切り捨て）の追加ダメージを与える。 戦闘中は実際のダメージを表示。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>呑み込む</span></h3>
-  <div class="art"><img src="img/swallow.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>9<span class="up">（12）</span>ダメージに加え、敵の<b>破滅</b>の半分（切り捨て）の追加ダメージを与える。<br>戦闘中は実際のダメージを表示。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="舌を這わす" data-text="カードを 2（強化 3）枚引く。 このターン、次にプレイする毒か破滅を付与するカードのコストが0になる。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>舌を這わす</span></h3>
-  <div class="art"><img src="img/tongue_flick.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>カードを 2<span class="up">（3）</span>枚引く。<br>このターン、次にプレイする<b>毒</b>か<b>破滅</b>を付与するカードのコストが0になる。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="毒の伝播" data-text="毒 2（強化 4）を付与する。 この敵の毒と同じ量の毒を、他のすべての敵に付与する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>毒の伝播</span></h3>
-  <div class="art"><img src="img/venom_spread.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>毒</b> 2<span class="up">（4）</span>を付与する。<br>この敵の<b>毒</b>と同じ量の<b>毒</b>を、他のすべての敵に付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="神経毒" data-text="毒 10（強化 13）を付与する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>神経毒</span></h3>
-  <div class="art"><img src="img/neurotoxin.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>毒</b> 10<span class="up">（13）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="祟り重ね" data-text="この敵の破滅を2倍にする。 廃棄。">
-  <div class="cost" title="コスト（強化で1）">2<i>1</i></div>
-  <h3 class="banner"><span>祟り重ね</span></h3>
-  <div class="art"><img src="img/doom_stack.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>この敵の<b>破滅</b>を2倍にする。<br><b>廃棄</b>。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="白蛇の舞" data-text="（強化で天賦） 毒を付与するカードは毒が1増える。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>白蛇の舞</span></h3>
-  <div class="art"><img src="img/white_snake_dance.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>（強化で<b>天賦</b>）<br><b>毒</b>を付与するカードは<b>毒</b>が1増える。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="祟り詞" data-text="破滅を付与するカードは破滅が 3（強化 5）増える。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>祟り詞</span></h3>
-  <div class="art"><img src="img/tatari_kotoba.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>破滅</b>を付与するカードは<b>破滅</b>が 3<span class="up">（5）</span>増える。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="言霊" data-text="破滅 2（強化 4）を付与する。 カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。 このカードのコストが1減少する（この戦闘中）。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>言霊</span></h3>
-  <div class="art"><img src="img/kotodama.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 2<span class="up">（4）</span>を付与する。<br>カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。<br>このカードのコストが1減少する（この戦闘中）。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="命分け" data-text="HPを10失う。 他のプレイヤー1人のHPを 15（強化 20）回復する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>命分け</span></h3>
-  <div class="art"><img src="img/inochiwake.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>HPを10失う。<br>他のプレイヤー1人のHPを 15<span class="up">（20）</span>回復する。</span></div>
-  <p class="note">アンコモン・マルチ専用</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="死の宣告" data-text="破滅 10（強化 13）を付与する。 この敵の破滅がHP以上なら、エナジー1を得て、HPを2回復する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>死の宣告</span></h3>
-  <div class="art"><img src="img/death_sentence.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 10<span class="up">（13）</span>を付与する。<br>この敵の<b>破滅</b>がHP以上なら、エナジー1を得て、HPを2回復する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="鱗の重ね" data-text="ターン終了時、3（強化 4）ブロックを得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>鱗の重ね</span></h3>
-  <div class="art"><img src="img/layered_scales.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>ターン終了時、3<span class="up">（4）</span><b>ブロック</b>を得る。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="とぐろの構え" data-text="9（強化 12）ブロックを得る。このターンにプレイしたカード1枚につき3減る（9→6→3→0）。 このターン、筋力を4失う。 保留。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>とぐろの構え</span></h3>
-  <div class="art"><img src="img/coiled_stance.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>9<span class="up">（12）</span><b>ブロック</b>を得る。このターンにプレイしたカード1枚につき3減る（9→6→3→0）。<br>このターン、<b>筋力</b>を4失う。<br><b>保留</b>。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="白蛇の加護" data-text="プレート 5（強化 7）を得る。 HPを2回復する。 廃棄。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>白蛇の加護</span></h3>
-  <div class="art"><img src="img/white_snake_blessing.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>プレート</b> 5<span class="up">（7）</span>を得る。<br>HPを2回復する。<br><b>廃棄</b>。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="呪噛" data-text="6ダメージに加え、このターンにプレイした毒か破滅を付与するカード1枚につき 5（強化 6）ダメージを与える（このカード自身は数えない）。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪噛</span></h3>
-  <div class="art"><img src="img/curse_bite.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>6ダメージに加え、このターンにプレイした<b>毒</b>か<b>破滅</b>を付与するカード1枚につき 5<span class="up">（6）</span>ダメージを与える（このカード自身は数えない）。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="蛇行" data-text="カードを 2（強化 3）枚引く。 カードを1枚捨てる。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>蛇行</span></h3>
-  <div class="art"><img src="img/meander.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>カードを 2<span class="up">（3）</span>枚引く。<br>カードを1枚捨てる。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="脱け出る" data-text="エナジー1を得る。強化するとさらにカードを1枚引く。 廃棄。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>脱け出る</span></h3>
-  <div class="art"><img src="img/slip_out.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>エナジー1を得る。強化するとさらにカードを1枚引く。<br><b>廃棄</b>。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="乱れ噛み" data-text="ランダムな敵に3ダメージを与え、毒 1 を付与する。これを 3（強化 4）回行う。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>乱れ噛み</span></h3>
-  <div class="art"><img src="img/rapid_bites.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>ランダムな敵に3ダメージを与え、<b>毒</b> 1 を付与する。これを 3<span class="up">（4）</span>回行う。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="薙ぎ払う尾" data-text="すべての敵に 6（強化 8）ダメージを与える。 すべての敵に毒 2（強化 3）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>薙ぎ払う尾</span></h3>
-  <div class="art"><img src="img/tail_sweep.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>すべての敵に 6<span class="up">（8）</span>ダメージを与える。<br>すべての敵に<b>毒</b> 2<span class="up">（3）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="急所狙い" data-text="15（強化 19）ダメージを与える。 この敵が毒を持っていれば、エナジー1を得る。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>急所狙い</span></h3>
-  <div class="art"><img src="img/vital_strike.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>15<span class="up">（19）</span>ダメージを与える。<br>この敵が<b>毒</b>を持っていれば、エナジー1を得る。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="大幣払い" data-text="3（強化 5）ダメージを与え、カードを1枚引く。これを2回行う。 （1回の攻撃の2ヒットなので、活力は両方に乗る）">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>大幣払い</span></h3>
-  <div class="art"><img src="img/gohei_sweep.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>3<span class="up">（5）</span>ダメージを与え、カードを1枚引く。これを2回行う。<br>（1回の攻撃の2ヒットなので、<b>活力</b>は両方に乗る）</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="蔓延る穢れ" data-text="すべての敵に、それぞれが持つ毒と同じ量の破滅を付与する（毒は減らない）。 廃棄（強化で廃棄なし）。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>蔓延る穢れ</span></h3>
-  <div class="art"><img src="img/curse_contagion.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>すべての敵に、それぞれが持つ<b>毒</b>と同じ量の<b>破滅</b>を付与する（<b>毒</b>は減らない）。<br><b>廃棄</b>（強化で<b>廃棄</b>なし）。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="祈祷" data-text="8（強化 11）ブロックを得る。 カードを1枚引く。 手札のカード1枚にエセリアルを付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>祈祷</span></h3>
-  <div class="art"><img src="img/prayer.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>8<span class="up">（11）</span><b>ブロック</b>を得る。<br>カードを1枚引く。<br>手札のカード1枚に<b>エセリアル</b>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="半眼" data-text="このターン、毒を付与するカードは毒が1、破滅を付与するカードは破滅が3増える。 強化で保留が付く。">
-  <div class="cost" title="コスト">0</div>
-  <h3 class="banner"><span>半眼</span></h3>
-  <div class="art"><img src="img/half_open_eyes.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>このターン、<b>毒</b>を付与するカードは<b>毒</b>が1、<b>破滅</b>を付与するカードは<b>破滅</b>が3増える。<br>強化で<b>保留</b>が付く。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="待ち伏せ" data-text="7（強化 9）ブロックを得る。 次のターン、カードを2枚引く。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>待ち伏せ</span></h3>
-  <div class="art"><img src="img/ambush.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>7<span class="up">（9）</span><b>ブロック</b>を得る。<br>次のターン、カードを2枚引く。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="毒腺" data-text="毒か破滅を付与するカードをプレイするたび、ランダムな敵に毒 1 を付与する。">
-  <div class="cost" title="コスト（強化で0）">1<i>0</i></div>
-  <h3 class="banner"><span>毒腺</span></h3>
-  <div class="art"><img src="img/venom_gland.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>毒</b>か<b>破滅</b>を付与するカードをプレイするたび、ランダムな敵に<b>毒</b> 1 を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="神楽" data-text="毒か破滅を付与するカードを3枚プレイするたび、カードを1枚引く。">
-  <div class="cost" title="コスト（強化で0）">1<i>0</i></div>
-  <h3 class="banner"><span>神楽</span></h3>
-  <div class="art"><img src="img/kagura.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>毒</b>か<b>破滅</b>を付与するカードを3枚プレイするたび、カードを1枚引く。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="呪い返し" data-text="攻撃を受けるたび、攻撃した敵に破滅 3（強化 4）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪い返し</span></h3>
-  <div class="art"><img src="img/curse_return.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>攻撃を受けるたび、攻撃した敵に<b>破滅</b> 3<span class="up">（4）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="呪いの連鎖" data-text="敵が破滅で倒れるたび、他のすべての敵に破滅 16（強化 19）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪いの連鎖</span></h3>
-  <div class="art"><img src="img/curse_chain.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>敵が<b>破滅</b>で倒れるたび、他のすべての敵に<b>破滅</b> 16<span class="up">（19）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="浸蝕" data-text="毒 3（強化 5）を付与する。 カードを1枚引く。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>浸蝕</span></h3>
-  <div class="art"><img src="img/corrode.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>毒</b> 3<span class="up">（5）</span>を付与する。<br>カードを1枚引く。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-skill" data-rarity="uncommon" data-type="skill" data-name="怨念" data-text="破滅 9（強化 11）を3回付与する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>怨念</span></h3>
-  <div class="art"><img src="img/grudge.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 9<span class="up">（11）</span>を3回付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="呪毒の牙" data-text="4（強化 6）ダメージを与える。 毒 3（強化 4）と破滅 7（強化 9）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>呪毒の牙</span></h3>
-  <div class="art"><img src="img/cursed_venom_fang.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>4<span class="up">（6）</span>ダメージを与える。<br><b>毒</b> 3<span class="up">（4）</span>と<b>破滅</b> 7<span class="up">（9）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-power" data-rarity="uncommon" data-type="power" data-name="荒魂" data-text="HPを回復するたび、このターン筋力 1（強化 2）を得る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>荒魂</span></h3>
-  <div class="art"><img src="img/aramitama.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>HPを回復するたび、このターン<b>筋力</b> 1<span class="up">（2）</span>を得る。</span></div>
-  <p class="note">アンコモン</p>
-</article>
-<article class="card r-uncommon t-attack" data-rarity="uncommon" data-type="attack" data-name="怨霊の爪" data-text="4（強化 6）ダメージを与える。 この敵が破滅を持っていれば、破滅 12（強化 15）を付与する。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>怨霊の爪</span></h3>
-  <div class="art"><img src="img/wraith_claw.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>4<span class="up">（6）</span>ダメージを与える。<br>この敵が<b>破滅</b>を持っていれば、<b>破滅</b> 12<span class="up">（15）</span>を付与する。</span></div>
-  <p class="note">アンコモン</p>
-</article></div></section><section class="sec" data-sec="rare"><h2>レア<small>24枚</small></h2><div class="grid">
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="百年の祟り" data-text="破滅 40（強化 55）を付与する。 廃棄。">
-  <div class="cost" title="コスト">3</div>
-  <h3 class="banner"><span>百年の祟り</span></h3>
-  <div class="art"><img src="img/century_curse.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 40<span class="up">（55）</span>を付与する。<br><b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="毒の祟り" data-text="敵の毒をすべて取り除き、その3倍の破滅を付与する。 強化で保留が付く。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒の祟り</span></h3>
-  <div class="art"><img src="img/poison_curse.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>敵の<b>毒</b>をすべて取り除き、その3倍の<b>破滅</b>を付与する。<br>強化で<b>保留</b>が付く。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="蛇睨み" data-text="この敵をスタンさせる。 廃棄。">
-  <div class="cost" title="コスト（強化で3）">4<i>3</i></div>
-  <h3 class="banner"><span>蛇睨み</span></h3>
-  <div class="art"><img src="img/serpent_glare.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>この敵をスタンさせる。<br><b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="蛇毒の化身" data-text="毒を付与するカードの毒が1.5倍（切り捨て）、強化で2倍になる。 2枚出しても2倍になる。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>蛇毒の化身</span></h3>
-  <div class="art"><img src="img/venom_avatar.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>毒</b>を付与するカードの<b>毒</b>が1.5倍（切り捨て）、強化で2倍になる。<br>2枚出しても2倍になる。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="呪殺" data-text="破滅 16（強化 19）を付与する。 この敵の破滅がHP以上なら、即座に倒す。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>呪殺</span></h3>
-  <div class="art"><img src="img/jusatsu.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 16<span class="up">（19）</span>を付与する。<br>この敵の<b>破滅</b>がHP以上なら、即座に倒す。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-attack" data-rarity="rare" data-type="attack" data-name="蛇神の顎" data-text="8（強化 13）ダメージを与える。 この敵の毒を1.5倍（切り捨て）にする。 その後、この敵の破滅をすべて取り除き、その1/3（切り捨て）の毒を付与する。廃棄。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>蛇神の顎</span></h3>
-  <div class="art"><img src="img/serpent_god_jaw.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>8<span class="up">（13）</span>ダメージを与える。<br>この敵の<b>毒</b>を1.5倍（切り捨て）にする。<br>その後、この敵の<b>破滅</b>をすべて取り除き、その1/3（切り捨て）の<b>毒</b>を付与する。<b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-attack" data-rarity="rare" data-type="attack" data-name="白蛇の一閃" data-text="6（強化 8）ダメージを与える。 この敵が毒と破滅の両方を持っていれば、ダメージが3倍（18／強化 24）になる。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>白蛇の一閃</span></h3>
-  <div class="art"><img src="img/white_snake_flash.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>6<span class="up">（8）</span>ダメージを与える。<br>この敵が<b>毒</b>と<b>破滅</b>の両方を持っていれば、ダメージが3倍（18／強化 24）になる。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-attack" data-rarity="rare" data-type="attack" data-name="大祓" data-text="すべての敵に 14（強化 18）ダメージを与える。 自分の脱力・弱体・脆弱を取り除く。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>大祓</span></h3>
-  <div class="art"><img src="img/oharae.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>すべての敵に 14<span class="up">（18）</span>ダメージを与える。<br>自分の脱力・弱体・脆弱を取り除く。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="蛇の抱擁" data-text="3（強化 6）ブロックに加え、すべての敵の破滅の合計の3分の1（切り捨て）のブロックを得る。 マルチでは破滅の部分だけ、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>蛇の抱擁</span></h3>
-  <div class="art"><img src="img/serpent_embrace.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>3<span class="up">（6）</span><b>ブロック</b>に加え、すべての敵の<b>破滅</b>の合計の3分の1（切り捨て）の<b>ブロック</b>を得る。<br>マルチでは<b>破滅</b>の部分だけ、<b>破滅</b>を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="鱗の鎧" data-text="ターン開始時、ブロックがすべて消えず、3分の1（切り捨て）残るようになる。 強化で半分残る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>鱗の鎧</span></h3>
-  <div class="art"><img src="img/scale_armor.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>ターン開始時、<b>ブロック</b>がすべて消えず、3分の1（切り捨て）残るようになる。<br>強化で半分残る。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="アスクレピオスの杖" data-text="すべての敵の毒の合計の1/2（切り捨て）だけ、HPを回復する。マルチではさらに、毒を使うプレイヤー（蛇の巫女・サイレント）の人数で割る。 廃棄。">
-  <div class="cost" title="コスト（強化で2）">3<i>2</i></div>
-  <h3 class="banner"><span>アスクレピオスの杖</span></h3>
-  <div class="art"><img src="img/asclepius_staff.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>すべての敵の<b>毒</b>の合計の1/2（切り捨て）だけ、HPを回復する。マルチではさらに、<b>毒</b>を使うプレイヤー（蛇の巫女・サイレント）の人数で割る。<br><b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="毒走り" data-text="すべての敵の毒を、今すぐ 1（強化 2）回発動させる（毒は減らない）。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>毒走り</span></h3>
-  <div class="art"><img src="img/venom_rush.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>すべての敵の<b>毒</b>を、今すぐ 1<span class="up">（2）</span>回発動させる（<b>毒</b>は減らない）。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="形代" data-text="この敵の破滅の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。 廃棄。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>形代</span></h3>
-  <div class="art"><img src="img/katashiro.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>この敵の<b>破滅</b>の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。<br><b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="祟り憑き" data-text="破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10（強化 1/8、切り捨て）だけ増える。 マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>祟り憑き</span></h3>
-  <div class="art"><img src="img/tatari_tsuki.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>破滅</b>を持つ敵へのアタックが、1ヒットごとにその敵の<b>破滅</b>の1/10<span class="up">（1/8、切り捨て）</span>だけ増える。<br>マルチでは、<b>破滅</b>を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-attack" data-rarity="rare" data-type="attack" data-name="丑の刻参り" data-text="2ダメージを与え、破滅 2 を付与する。これを 5（強化 7）回行う。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>丑の刻参り</span></h3>
-  <div class="art"><img src="img/ushi_no_koku_mairi.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>2ダメージを与え、<b>破滅</b> 2 を付与する。これを 5<span class="up">（7）</span>回行う。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="陰陽" data-text="破滅を持つ敵が毒でHPを失うたび、失った量の半分（切り捨て）の破滅を得る。">
-  <div class="cost" title="コスト（強化で0）">1<i>0</i></div>
-  <h3 class="banner"><span>陰陽</span></h3>
-  <div class="art"><img src="img/inyou.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>破滅</b>を持つ敵が<b>毒</b>でHPを失うたび、失った量の半分（切り捨て）の<b>破滅</b>を得る。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="呪毒一体" data-text="毒と破滅の両方を持つ敵は、毒と破滅の合計がHP以上なら、破滅で倒れる。">
-  <div class="cost" title="コスト（強化で2）">3<i>2</i></div>
-  <h3 class="banner"><span>呪毒一体</span></h3>
-  <div class="art"><img src="img/judoku_ittai.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span><b>毒</b>と<b>破滅</b>の両方を持つ敵は、<b>毒</b>と<b>破滅</b>の合計がHP以上なら、<b>破滅</b>で倒れる。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="毒杯の儀" data-text="ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。 自分が毒で失うHPは半分になる。 自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。">
-  <div class="cost" title="コスト（強化で1）">2<i>1</i></div>
-  <h3 class="banner"><span>毒杯の儀</span></h3>
-  <div class="art"><img src="img/dokuhai_no_gi.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に<b>毒</b> 3 を付与する。<br>自分が<b>毒</b>で失うHPは半分になる。<br>自分の<b>毒</b>が発動するたび、すべての敵に自分の<b>毒</b>と同じ量の<b>毒</b>を付与する。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-attack" data-rarity="rare" data-type="attack" data-name="群蛇乱牙" data-text="7ダメージを与え、5ブロックを得る。 手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。 エセリアル。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>群蛇乱牙</span></h3>
-  <div class="art"><img src="img/gunjaranga.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>7ダメージを与え、5<b>ブロック</b>を得る。<br>手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。<br><b>エセリアル</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="双頭" data-text="現在のHPの3分の1（強化 4分の1、切り捨て）を失う。 毎ターン、最初にプレイする毒を付与するカードと、破滅を付与するカードが、それぞれもう1回発動する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>双頭</span></h3>
-  <div class="art"><img src="img/twin_head.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>現在のHPの3分の1<span class="up">（4分の1、切り捨て）</span>を失う。<br>毎ターン、最初にプレイする<b>毒</b>を付与するカードと、<b>破滅</b>を付与するカードが、それぞれもう1回発動する。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="神降ろし" data-text="このターン、毒か破滅を付与するカードのコストがすべて0になる。 カードを 1（強化 2）枚引く。廃棄。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>神降ろし</span></h3>
-  <div class="art"><img src="img/kamioroshi.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>このターン、<b>毒</b>か<b>破滅</b>を付与するカードのコストがすべて0になる。<br>カードを 1<span class="up">（2）</span>枚引く。<b>廃棄</b>。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="千手の舞" data-text="コスト0のカードをプレイするたび、カードを1枚引く（1ターン3回まで）。">
-  <div class="cost" title="コスト（強化で0）">1<i>0</i></div>
-  <h3 class="banner"><span>千手の舞</span></h3>
-  <div class="art"><img src="img/thousand_hands.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>コスト0のカードをプレイするたび、カードを1枚引く（1ターン3回まで）。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-power" data-rarity="rare" data-type="power" data-name="祟り神" data-text="ターン開始時、すべての敵に破滅 8（強化 11）を付与する。 バッファー 1 を得る。">
-  <div class="cost" title="コスト">3</div>
-  <h3 class="banner"><span>祟り神</span></h3>
-  <div class="art"><img src="img/tatari_god.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">パワー</div>
-  <div class="fx"><span>ターン開始時、すべての敵に<b>破滅</b> 8<span class="up">（11）</span>を付与する。<br>バッファー 1 を得る。</span></div>
-  <p class="note">レア</p>
-</article>
-<article class="card r-rare t-skill" data-rarity="rare" data-type="skill" data-name="大祈祷" data-text="7（強化 9）ブロックを得る。 山札のカードを2枚選んで廃棄する。">
-  <div class="cost" title="コスト">2</div>
-  <h3 class="banner"><span>大祈祷</span></h3>
-  <div class="art"><img src="img/great_prayer.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span>7<span class="up">（9）</span><b>ブロック</b>を得る。<br>山札のカードを2枚選んで<b>廃棄</b>する。</span></div>
-  <p class="note">レア</p>
-</article></div></section><section class="sec" data-sec="ancient"><h2>エンシェント<small>2枚</small></h2><div class="grid">
-<article class="card r-ancient t-skill" data-rarity="ancient" data-type="skill" data-name="大祟り" data-text="破滅 7（強化 9）を3回付与する。 天賦。">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>大祟り</span></h3>
-  <div class="art"><img src="img/great_tatari.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">スキル</div>
-  <div class="fx"><span><b>破滅</b> 7<span class="up">（9）</span>を3回付与する。<br><b>天賦</b>。</span></div>
-  <p class="note">エンシェント</p>
-</article>
-<article class="card r-ancient t-attack" data-rarity="ancient" data-type="attack" data-name="八岐大蛇" data-text="敵1体に2（強化 3）ダメージを与え、毒 1 を付与する。これを 8 回行う。 （毒蛇が「古びた歯」で変化するカード）">
-  <div class="cost" title="コスト">1</div>
-  <h3 class="banner"><span>八岐大蛇</span></h3>
-  <div class="art"><img src="img/yamata.png" alt="" loading="lazy" width="250" height="190"></div>
-  <div class="plate">アタック</div>
-  <div class="fx"><span>敵1体に2<span class="up">（3）</span>ダメージを与え、<b>毒</b> 1 を付与する。これを 8 回行う。<br>（毒蛇が「古びた歯」で変化するカード）</span></div>
-  <p class="note">エンシェント</p>
+<section class="sec" data-sec="basic"><h2>基本（4枚）</h2><div class="list">
+<article class="card" data-rarity="basic" data-type="attack" data-name="ストライク" data-text="6（強化 9）ダメージを与える。">
+  <img src="img/strike_snake_miko.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>ストライク</h3>
+    <p class="meta">アタック・コスト1・初期デッキに3枚</p>
+    <p class="fx">6<span class="up">（強化 9）</span>ダメージを与える。</p>
+  </div>
+</article>
+<article class="card" data-rarity="basic" data-type="skill" data-name="防御" data-text="5（強化 8）ブロックを得る。">
+  <img src="img/defend_snake_miko.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>防御</h3>
+    <p class="meta">スキル・コスト1・初期デッキに5枚</p>
+    <p class="fx">5<span class="up">（強化 8）</span>ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="basic" data-type="attack" data-name="毒蛇" data-text="3（強化 5）ダメージを与える。 毒 4（強化 5）を付与する。">
+  <img src="img/venom_fang.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒蛇</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">3<span class="up">（強化 5）</span>ダメージを与える。<br>毒 4<span class="up">（強化 5）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="basic" data-type="skill" data-name="祟り" data-text="破滅 6（強化 8）を2回付与する。">
+  <img src="img/tatari.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祟り</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">破滅 6<span class="up">（強化 8）</span>を2回付与する。</p>
+  </div>
+</article></div></section><section class="sec" data-sec="common"><h2>コモン（20枚）</h2><div class="list">
+<article class="card" data-rarity="common" data-type="skill" data-name="毒霧" data-text="すべての敵に毒 3（強化 4）を付与する。">
+  <img src="img/poison_mist.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒霧</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">すべての敵に毒 3<span class="up">（強化 4）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="滴る毒液" data-text="毒 5（強化 7）を付与する。">
+  <img src="img/dripping_venom.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>滴る毒液</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">毒 5<span class="up">（強化 7）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="呪詛" data-text="破滅 14（強化 18）を付与する。">
+  <img src="img/juso.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪詛</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">破滅 14<span class="up">（強化 18）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="怨嗟の牙" data-text="5（強化 7）ダメージを与える。 破滅 8（強化 10）を付与する。">
+  <img src="img/grudge_fang.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>怨嗟の牙</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">5<span class="up">（強化 7）</span>ダメージを与える。<br>破滅 8<span class="up">（強化 10）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="噛みつき" data-text="2（強化 3）ダメージを与える。 毒 1（強化 2）を付与する。">
+  <img src="img/nibble.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>噛みつき</h3>
+    <p class="meta">アタック・コスト0</p>
+    <p class="fx">2<span class="up">（強化 3）</span>ダメージを与える。<br>毒 1<span class="up">（強化 2）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="小さな呪い" data-text="破滅 7（強化 9）を付与する。">
+  <img src="img/petty_curse.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>小さな呪い</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">破滅 7<span class="up">（強化 9）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="とぐろを巻く" data-text="9（強化 11）ブロックを得る。">
+  <img src="img/coil.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>とぐろを巻く</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">9<span class="up">（強化 11）</span>ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="毒針" data-text="6（強化 8）ダメージを与える。 この敵が毒を持っていれば、毒 4（強化 5）を付与する。">
+  <img src="img/poison_needle.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒針</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">6<span class="up">（強化 8）</span>ダメージを与える。<br>この敵が毒を持っていれば、毒 4<span class="up">（強化 5）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="二股の舌" data-text="毒 2（強化 3）を2回付与する。">
+  <img src="img/forked_tongue.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>二股の舌</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">毒 2<span class="up">（強化 3）</span>を2回付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="呪いの囁き" data-text="すべての敵に破滅 9（強化 11）を付与する。">
+  <img src="img/cursed_whisper.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪いの囁き</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">すべての敵に破滅 9<span class="up">（強化 11）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="締め上げ" data-text="7（強化 9）ダメージを与える。 この敵の破滅がHPの半分以上なら、もう一度 7（強化 9）ダメージを与える。">
+  <img src="img/constrict.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>締め上げ</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">7<span class="up">（強化 9）</span>ダメージを与える。<br>この敵の破滅がHPの半分以上なら、もう一度 7<span class="up">（強化 9）</span>ダメージを与える。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="トリプルストライク" data-text="3（強化 4）ダメージを3回与える。 （ストライク）">
+  <img src="img/triple_strike.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>トリプルストライク</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">3<span class="up">（強化 4）</span>ダメージを3回与える。<br>（ストライク）</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="鱗を立てる" data-text="このターン、敏捷 3 を得る。 5（強化 8）ブロックを得る。">
+  <img src="img/raise_scales.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>鱗を立てる</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">このターン、敏捷 3 を得る。<br>5<span class="up">（強化 8）</span>ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="毒の帳" data-text="5（強化 7）ブロックを得る。 ランダムな敵に毒 2（強化 3）を付与する。">
+  <img src="img/venom_veil.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒の帳</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">5<span class="up">（強化 7）</span>ブロックを得る。<br>ランダムな敵に毒 2<span class="up">（強化 3）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="呪縛の壁" data-text="6（強化 7）ブロックを得る。 破滅 6（強化 8）を付与する。">
+  <img src="img/binding_wall.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪縛の壁</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">6<span class="up">（強化 7）</span>ブロックを得る。<br>破滅 6<span class="up">（強化 8）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="尾撃" data-text="2（強化 3）ダメージを与える。 活力 4（強化 5）を得る。">
+  <img src="img/tail_strike.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>尾撃</h3>
+    <p class="meta">アタック・コスト0</p>
+    <p class="fx">2<span class="up">（強化 3）</span>ダメージを与える。<br>活力 4<span class="up">（強化 5）</span>を得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="白衣の加護" data-text="2（強化 4）ブロックを得る。 破滅を持つ敵がいれば、さらに 3 ブロックを得る。">
+  <img src="img/shrine_garb.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>白衣の加護</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">2<span class="up">（強化 4）</span>ブロックを得る。<br>破滅を持つ敵がいれば、さらに 3 ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="舌先" data-text="カードを1枚引く。 ランダムな敵に毒 1（強化 2）を付与する。">
+  <img src="img/tongue_tip.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>舌先</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">カードを1枚引く。<br>ランダムな敵に毒 1<span class="up">（強化 2）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="skill" data-name="蛇の目" data-text="カードを 2（強化 3）枚引く。 手札の毒か破滅を付与するカードを1枚アップグレードする。">
+  <img src="img/serpent_eye.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇の目</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>手札の毒か破滅を付与するカードを1枚アップグレードする。</p>
+  </div>
+</article>
+<article class="card" data-rarity="common" data-type="attack" data-name="毒噛み" data-text="この敵の毒に等しいダメージを与える（毒は減らない）。 戦闘中は実際のダメージを表示。">
+  <img src="img/venom_bite.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒噛み</h3>
+    <p class="meta">アタック・コスト2<span class="up">（強化 1）</span></p>
+    <p class="fx">この敵の毒に等しいダメージを与える（毒は減らない）。<br>戦闘中は実際のダメージを表示。</p>
+  </div>
+</article></div></section><section class="sec" data-sec="uncommon"><h2>アンコモン（36枚）</h2><div class="list">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="脱皮" data-text="HPを 3（強化 5）回復する。 最大HPを1増やす。 廃棄。">
+  <img src="img/molt.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>脱皮</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">HPを 3<span class="up">（強化 5）</span>回復する。<br>最大HPを1増やす。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="蛇毒の巡り" data-text="ターン開始時、ランダムな敵に毒 1 を 4（強化 5）回付与する。">
+  <img src="img/venom_circulation.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇毒の巡り</h3>
+    <p class="meta">パワー・コスト2</p>
+    <p class="fx">ターン開始時、ランダムな敵に毒 1 を 4<span class="up">（強化 5）</span>回付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="鱗の守り" data-text="毒か破滅を付与するカードをプレイするたび、2（強化 3）ブロックを得る。">
+  <img src="img/scale_guard.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>鱗の守り</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">毒か破滅を付与するカードをプレイするたび、2<span class="up">（強化 3）</span>ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="呑み込む" data-text="9（強化 12）ダメージに加え、敵の破滅の半分（切り捨て）の追加ダメージを与える。 戦闘中は実際のダメージを表示。">
+  <img src="img/swallow.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呑み込む</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">9<span class="up">（強化 12）</span>ダメージに加え、敵の破滅の半分（切り捨て）の追加ダメージを与える。<br>戦闘中は実際のダメージを表示。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="舌を這わす" data-text="カードを 2（強化 3）枚引く。 このターン、次にプレイする毒か破滅を付与するカードのコストが0になる。">
+  <img src="img/tongue_flick.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>舌を這わす</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>このターン、次にプレイする毒か破滅を付与するカードのコストが0になる。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="毒の伝播" data-text="毒 2（強化 4）を付与する。 この敵の毒と同じ量の毒を、他のすべての敵に付与する。">
+  <img src="img/venom_spread.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒の伝播</h3>
+    <p class="meta">スキル・コスト2</p>
+    <p class="fx">毒 2<span class="up">（強化 4）</span>を付与する。<br>この敵の毒と同じ量の毒を、他のすべての敵に付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="神経毒" data-text="毒 10（強化 13）を付与する。">
+  <img src="img/neurotoxin.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>神経毒</h3>
+    <p class="meta">スキル・コスト2</p>
+    <p class="fx">毒 10<span class="up">（強化 13）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="祟り重ね" data-text="この敵の破滅を2倍にする。 廃棄。">
+  <img src="img/doom_stack.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祟り重ね</h3>
+    <p class="meta">スキル・コスト2<span class="up">（強化 1）</span></p>
+    <p class="fx">この敵の破滅を2倍にする。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="白蛇の舞" data-text="（強化で天賦） 毒を付与するカードは毒が1増える。">
+  <img src="img/white_snake_dance.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>白蛇の舞</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">（強化で天賦）<br>毒を付与するカードは毒が1増える。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="祟り詞" data-text="破滅を付与するカードは破滅が 3（強化 5）増える。">
+  <img src="img/tatari_kotoba.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祟り詞</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">破滅を付与するカードは破滅が 3<span class="up">（強化 5）</span>増える。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="言霊" data-text="破滅 2（強化 4）を付与する。 カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。 このカードのコストが1減少する（この戦闘中）。">
+  <img src="img/kotodama.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>言霊</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">破滅 2<span class="up">（強化 4）</span>を付与する。<br>カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。<br>このカードのコストが1減少する（この戦闘中）。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="命分け" data-text="HPを10失う。 他のプレイヤー1人のHPを 15（強化 20）回復する。">
+  <img src="img/inochiwake.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>命分け</h3>
+    <p class="meta">スキル・コスト1・マルチ専用</p>
+    <p class="fx">HPを10失う。<br>他のプレイヤー1人のHPを 15<span class="up">（強化 20）</span>回復する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="死の宣告" data-text="破滅 10（強化 13）を付与する。 この敵の破滅がHP以上なら、エナジー1を得て、HPを2回復する。">
+  <img src="img/death_sentence.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>死の宣告</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">破滅 10<span class="up">（強化 13）</span>を付与する。<br>この敵の破滅がHP以上なら、エナジー1を得て、HPを2回復する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="鱗の重ね" data-text="ターン終了時、3（強化 4）ブロックを得る。">
+  <img src="img/layered_scales.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>鱗の重ね</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">ターン終了時、3<span class="up">（強化 4）</span>ブロックを得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="とぐろの構え" data-text="9（強化 12）ブロックを得る。このターンにプレイしたカード1枚につき3減る（9→6→3→0）。 このターン、筋力を4失う。 保留。">
+  <img src="img/coiled_stance.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>とぐろの構え</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">9<span class="up">（強化 12）</span>ブロックを得る。このターンにプレイしたカード1枚につき3減る（9→6→3→0）。<br>このターン、筋力を4失う。<br>保留。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="白蛇の加護" data-text="プレート 5（強化 7）を得る。 HPを2回復する。 廃棄。">
+  <img src="img/white_snake_blessing.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>白蛇の加護</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">プレート 5<span class="up">（強化 7）</span>を得る。<br>HPを2回復する。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="呪噛" data-text="6ダメージに加え、このターンにプレイした毒か破滅を付与するカード1枚につき 5（強化 6）ダメージを与える（このカード自身は数えない）。">
+  <img src="img/curse_bite.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪噛</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">6ダメージに加え、このターンにプレイした毒か破滅を付与するカード1枚につき 5<span class="up">（強化 6）</span>ダメージを与える（このカード自身は数えない）。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="蛇行" data-text="カードを 2（強化 3）枚引く。 カードを1枚捨てる。">
+  <img src="img/meander.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇行</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>カードを1枚捨てる。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="脱け出る" data-text="エナジー1を得る。強化するとさらにカードを1枚引く。 廃棄。">
+  <img src="img/slip_out.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>脱け出る</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">エナジー1を得る。強化するとさらにカードを1枚引く。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="乱れ噛み" data-text="ランダムな敵に3ダメージを与え、毒 1 を付与する。これを 3（強化 4）回行う。">
+  <img src="img/rapid_bites.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>乱れ噛み</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">ランダムな敵に3ダメージを与え、毒 1 を付与する。これを 3<span class="up">（強化 4）</span>回行う。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="薙ぎ払う尾" data-text="すべての敵に 6（強化 8）ダメージを与える。 すべての敵に毒 2（強化 3）を付与する。">
+  <img src="img/tail_sweep.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>薙ぎ払う尾</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">すべての敵に 6<span class="up">（強化 8）</span>ダメージを与える。<br>すべての敵に毒 2<span class="up">（強化 3）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="急所狙い" data-text="15（強化 19）ダメージを与える。 この敵が毒を持っていれば、エナジー1を得る。">
+  <img src="img/vital_strike.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>急所狙い</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">15<span class="up">（強化 19）</span>ダメージを与える。<br>この敵が毒を持っていれば、エナジー1を得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="大幣払い" data-text="3（強化 5）ダメージを与え、カードを1枚引く。これを2回行う。 （1回の攻撃の2ヒットなので、活力は両方に乗る）">
+  <img src="img/gohei_sweep.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>大幣払い</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">3<span class="up">（強化 5）</span>ダメージを与え、カードを1枚引く。これを2回行う。<br>（1回の攻撃の2ヒットなので、活力は両方に乗る）</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="蔓延る穢れ" data-text="すべての敵に、それぞれが持つ毒と同じ量の破滅を付与する（毒は減らない）。 廃棄（強化で廃棄なし）。">
+  <img src="img/curse_contagion.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蔓延る穢れ</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">すべての敵に、それぞれが持つ毒と同じ量の破滅を付与する（毒は減らない）。<br>廃棄（強化で廃棄なし）。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="祈祷" data-text="8（強化 11）ブロックを得る。 カードを1枚引く。 手札のカード1枚にエセリアルを付与する。">
+  <img src="img/prayer.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祈祷</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">8<span class="up">（強化 11）</span>ブロックを得る。<br>カードを1枚引く。<br>手札のカード1枚にエセリアルを付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="半眼" data-text="このターン、毒を付与するカードは毒が1、破滅を付与するカードは破滅が3増える。 強化で保留が付く。">
+  <img src="img/half_open_eyes.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>半眼</h3>
+    <p class="meta">スキル・コスト0</p>
+    <p class="fx">このターン、毒を付与するカードは毒が1、破滅を付与するカードは破滅が3増える。<br>強化で保留が付く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="待ち伏せ" data-text="7（強化 9）ブロックを得る。 次のターン、カードを2枚引く。">
+  <img src="img/ambush.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>待ち伏せ</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">7<span class="up">（強化 9）</span>ブロックを得る。<br>次のターン、カードを2枚引く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="毒腺" data-text="毒か破滅を付与するカードをプレイするたび、ランダムな敵に毒 1 を付与する。">
+  <img src="img/venom_gland.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒腺</h3>
+    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="fx">毒か破滅を付与するカードをプレイするたび、ランダムな敵に毒 1 を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="神楽" data-text="毒か破滅を付与するカードを3枚プレイするたび、カードを1枚引く。">
+  <img src="img/kagura.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>神楽</h3>
+    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="fx">毒か破滅を付与するカードを3枚プレイするたび、カードを1枚引く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="呪い返し" data-text="攻撃を受けるたび、攻撃した敵に破滅 3（強化 4）を付与する。">
+  <img src="img/curse_return.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪い返し</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">攻撃を受けるたび、攻撃した敵に破滅 3<span class="up">（強化 4）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="呪いの連鎖" data-text="敵が破滅で倒れるたび、他のすべての敵に破滅 16（強化 19）を付与する。">
+  <img src="img/curse_chain.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪いの連鎖</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">敵が破滅で倒れるたび、他のすべての敵に破滅 16<span class="up">（強化 19）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="浸蝕" data-text="毒 3（強化 5）を付与する。 カードを1枚引く。">
+  <img src="img/corrode.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>浸蝕</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">毒 3<span class="up">（強化 5）</span>を付与する。<br>カードを1枚引く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="怨念" data-text="破滅 9（強化 11）を3回付与する。">
+  <img src="img/grudge.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>怨念</h3>
+    <p class="meta">スキル・コスト2</p>
+    <p class="fx">破滅 9<span class="up">（強化 11）</span>を3回付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="呪毒の牙" data-text="4（強化 6）ダメージを与える。 毒 3（強化 4）と破滅 7（強化 9）を付与する。">
+  <img src="img/cursed_venom_fang.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪毒の牙</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">4<span class="up">（強化 6）</span>ダメージを与える。<br>毒 3<span class="up">（強化 4）</span>と破滅 7<span class="up">（強化 9）</span>を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="power" data-name="荒魂" data-text="HPを回復するたび、このターン筋力 1（強化 2）を得る。">
+  <img src="img/aramitama.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>荒魂</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">HPを回復するたび、このターン筋力 1<span class="up">（強化 2）</span>を得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="uncommon" data-type="attack" data-name="怨霊の爪" data-text="4（強化 6）ダメージを与える。 この敵が破滅を持っていれば、破滅 12（強化 15）を付与する。">
+  <img src="img/wraith_claw.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>怨霊の爪</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">4<span class="up">（強化 6）</span>ダメージを与える。<br>この敵が破滅を持っていれば、破滅 12<span class="up">（強化 15）</span>を付与する。</p>
+  </div>
+</article></div></section><section class="sec" data-sec="rare"><h2>レア（24枚）</h2><div class="list">
+<article class="card" data-rarity="rare" data-type="skill" data-name="百年の祟り" data-text="破滅 40（強化 55）を付与する。 廃棄。">
+  <img src="img/century_curse.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>百年の祟り</h3>
+    <p class="meta">スキル・コスト3</p>
+    <p class="fx">破滅 40<span class="up">（強化 55）</span>を付与する。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="毒の祟り" data-text="敵の毒をすべて取り除き、その3倍の破滅を付与する。 強化で保留が付く。">
+  <img src="img/poison_curse.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒の祟り</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">敵の毒をすべて取り除き、その3倍の破滅を付与する。<br>強化で保留が付く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="蛇睨み" data-text="この敵をスタンさせる。 廃棄。">
+  <img src="img/serpent_glare.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇睨み</h3>
+    <p class="meta">スキル・コスト4<span class="up">（強化 3）</span></p>
+    <p class="fx">この敵をスタンさせる。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="蛇毒の化身" data-text="毒を付与するカードの毒が1.5倍（切り捨て）、強化で2倍になる。 2枚出しても2倍になる。">
+  <img src="img/venom_avatar.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇毒の化身</h3>
+    <p class="meta">パワー・コスト2</p>
+    <p class="fx">毒を付与するカードの毒が1.5倍（切り捨て）、強化で2倍になる。<br>2枚出しても2倍になる。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="呪殺" data-text="破滅 16（強化 19）を付与する。 この敵の破滅がHP以上なら、即座に倒す。">
+  <img src="img/jusatsu.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪殺</h3>
+    <p class="meta">スキル・コスト2</p>
+    <p class="fx">破滅 16<span class="up">（強化 19）</span>を付与する。<br>この敵の破滅がHP以上なら、即座に倒す。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="attack" data-name="蛇神の顎" data-text="8（強化 13）ダメージを与える。 この敵の毒を1.5倍（切り捨て）にする。 その後、この敵の破滅をすべて取り除き、その1/3（切り捨て）の毒を付与する。廃棄。">
+  <img src="img/serpent_god_jaw.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇神の顎</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">8<span class="up">（強化 13）</span>ダメージを与える。<br>この敵の毒を1.5倍（切り捨て）にする。<br>その後、この敵の破滅をすべて取り除き、その1/3（切り捨て）の毒を付与する。廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="attack" data-name="白蛇の一閃" data-text="6（強化 8）ダメージを与える。 この敵が毒と破滅の両方を持っていれば、ダメージが3倍（18／強化 24）になる。">
+  <img src="img/white_snake_flash.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>白蛇の一閃</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">6<span class="up">（強化 8）</span>ダメージを与える。<br>この敵が毒と破滅の両方を持っていれば、ダメージが3倍（18／強化 24）になる。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="attack" data-name="大祓" data-text="すべての敵に 14（強化 18）ダメージを与える。 自分の脱力・弱体・脆弱を取り除く。">
+  <img src="img/oharae.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>大祓</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">すべての敵に 14<span class="up">（強化 18）</span>ダメージを与える。<br>自分の脱力・弱体・脆弱を取り除く。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="蛇の抱擁" data-text="3（強化 6）ブロックに加え、すべての敵の破滅の合計の3分の1（切り捨て）のブロックを得る。 マルチでは破滅の部分だけ、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
+  <img src="img/serpent_embrace.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇の抱擁</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">3<span class="up">（強化 6）</span>ブロックに加え、すべての敵の破滅の合計の3分の1（切り捨て）のブロックを得る。<br>マルチでは破滅の部分だけ、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="鱗の鎧" data-text="ターン開始時、ブロックがすべて消えず、3分の1（切り捨て）残るようになる。 強化で半分残る。">
+  <img src="img/scale_armor.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>鱗の鎧</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">ターン開始時、ブロックがすべて消えず、3分の1（切り捨て）残るようになる。<br>強化で半分残る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="アスクレピオスの杖" data-text="すべての敵の毒の合計の1/2（切り捨て）だけ、HPを回復する。マルチではさらに、毒を使うプレイヤー（蛇の巫女・サイレント）の人数で割る。 廃棄。">
+  <img src="img/asclepius_staff.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>アスクレピオスの杖</h3>
+    <p class="meta">スキル・コスト3<span class="up">（強化 2）</span></p>
+    <p class="fx">すべての敵の毒の合計の1/2（切り捨て）だけ、HPを回復する。マルチではさらに、毒を使うプレイヤー（蛇の巫女・サイレント）の人数で割る。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="毒走り" data-text="すべての敵の毒を、今すぐ 1（強化 2）回発動させる（毒は減らない）。">
+  <img src="img/venom_rush.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒走り</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">すべての敵の毒を、今すぐ 1<span class="up">（強化 2）</span>回発動させる（毒は減らない）。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="形代" data-text="この敵の破滅の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。 廃棄。">
+  <img src="img/katashiro.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>形代</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">この敵の破滅の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。<br>廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="祟り憑き" data-text="破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10（強化 1/8、切り捨て）だけ増える。 マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
+  <img src="img/tatari_tsuki.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祟り憑き</h3>
+    <p class="meta">パワー・コスト1</p>
+    <p class="fx">破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10<span class="up">（強化 1/8、切り捨て）</span>だけ増える。<br>マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="attack" data-name="丑の刻参り" data-text="2ダメージを与え、破滅 2 を付与する。これを 5（強化 7）回行う。">
+  <img src="img/ushi_no_koku_mairi.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>丑の刻参り</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">2ダメージを与え、破滅 2 を付与する。これを 5<span class="up">（強化 7）</span>回行う。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="陰陽" data-text="破滅を持つ敵が毒でHPを失うたび、失った量の半分（切り捨て）の破滅を得る。">
+  <img src="img/inyou.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>陰陽</h3>
+    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="fx">破滅を持つ敵が毒でHPを失うたび、失った量の半分（切り捨て）の破滅を得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="呪毒一体" data-text="毒と破滅の両方を持つ敵は、毒と破滅の合計がHP以上なら、破滅で倒れる。">
+  <img src="img/judoku_ittai.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>呪毒一体</h3>
+    <p class="meta">パワー・コスト3<span class="up">（強化 2）</span></p>
+    <p class="fx">毒と破滅の両方を持つ敵は、毒と破滅の合計がHP以上なら、破滅で倒れる。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="毒杯の儀" data-text="ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。 自分が毒で失うHPは半分になる。 自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。">
+  <img src="img/dokuhai_no_gi.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>毒杯の儀</h3>
+    <p class="meta">パワー・コスト2<span class="up">（強化 1）</span></p>
+    <p class="fx">ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。<br>自分が毒で失うHPは半分になる。<br>自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="attack" data-name="群蛇乱牙" data-text="7ダメージを与え、5ブロックを得る。 手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。 エセリアル。">
+  <img src="img/gunjaranga.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>群蛇乱牙</h3>
+    <p class="meta">アタック・コスト2</p>
+    <p class="fx">7ダメージを与え、5ブロックを得る。<br>手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。<br>エセリアル。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="双頭" data-text="現在のHPの3分の1（強化 4分の1、切り捨て）を失う。 毎ターン、最初にプレイする毒を付与するカードと、破滅を付与するカードが、それぞれもう1回発動する。">
+  <img src="img/twin_head.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>双頭</h3>
+    <p class="meta">パワー・コスト2</p>
+    <p class="fx">現在のHPの3分の1<span class="up">（強化 4分の1、切り捨て）</span>を失う。<br>毎ターン、最初にプレイする毒を付与するカードと、破滅を付与するカードが、それぞれもう1回発動する。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="神降ろし" data-text="このターン、毒か破滅を付与するカードのコストがすべて0になる。 カードを 1（強化 2）枚引く。廃棄。">
+  <img src="img/kamioroshi.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>神降ろし</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">このターン、毒か破滅を付与するカードのコストがすべて0になる。<br>カードを 1<span class="up">（強化 2）</span>枚引く。廃棄。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="千手の舞" data-text="コスト0のカードをプレイするたび、カードを1枚引く（1ターン3回まで）。">
+  <img src="img/thousand_hands.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>千手の舞</h3>
+    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="fx">コスト0のカードをプレイするたび、カードを1枚引く（1ターン3回まで）。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="power" data-name="祟り神" data-text="ターン開始時、すべての敵に破滅 8（強化 11）を付与する。 バッファー 1 を得る。">
+  <img src="img/tatari_god.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>祟り神</h3>
+    <p class="meta">パワー・コスト3</p>
+    <p class="fx">ターン開始時、すべての敵に破滅 8<span class="up">（強化 11）</span>を付与する。<br>バッファー 1 を得る。</p>
+  </div>
+</article>
+<article class="card" data-rarity="rare" data-type="skill" data-name="大祈祷" data-text="7（強化 9）ブロックを得る。 山札のカードを2枚選んで廃棄する。">
+  <img src="img/great_prayer.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>大祈祷</h3>
+    <p class="meta">スキル・コスト2</p>
+    <p class="fx">7<span class="up">（強化 9）</span>ブロックを得る。<br>山札のカードを2枚選んで廃棄する。</p>
+  </div>
+</article></div></section><section class="sec" data-sec="ancient"><h2>エンシェント（2枚）</h2><div class="list">
+<article class="card" data-rarity="ancient" data-type="skill" data-name="大祟り" data-text="破滅 7（強化 9）を3回付与する。 天賦。">
+  <img src="img/great_tatari.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>大祟り</h3>
+    <p class="meta">スキル・コスト1</p>
+    <p class="fx">破滅 7<span class="up">（強化 9）</span>を3回付与する。<br>天賦。</p>
+  </div>
+</article>
+<article class="card" data-rarity="ancient" data-type="attack" data-name="八岐大蛇" data-text="敵1体に2（強化 3）ダメージを与え、毒 1 を付与する。これを 8 回行う。 （毒蛇が「古びた歯」で変化するカード）">
+  <img src="img/yamata.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>八岐大蛇</h3>
+    <p class="meta">アタック・コスト1</p>
+    <p class="fx">敵1体に2<span class="up">（強化 3）</span>ダメージを与え、毒 1 を付与する。これを 8 回行う。<br>（毒蛇が「古びた歯」で変化するカード）</p>
+  </div>
 </article></div></section>
 <p class="foot"></p>
 </div>
