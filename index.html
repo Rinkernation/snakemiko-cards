@@ -6,15 +6,12 @@
 <title>蛇の巫女 カード帳</title>
 <meta name="description" content="Slay the Spire 2 のMOD「蛇の巫女」の全カードのイラストと効果。">
 <style>
-/* 飾らないカード一覧。端末の標準フォント、白地（ダークモードでは黒地）、絵と文字だけ */
+/* 飾らないカード一覧。端末の標準フォント、黒地固定（白はユーザーが見づらいと判断）、絵と文字だけ */
 :root{
-  --bg:#ffffff; --text:#1f1f1f; --sub:#6a6a6a; --line:#e3e3e3; --chip:#f2f2f2; --up:#2b7a3d; --attack:#a8443a; --skill:#3b65a0; --power:#71519c;
-  color-scheme:light;
+  --bg:#161616; --text:#e6e6e6; --sub:#9a9a9a; --line:#2e2e2e; --chip:#232323; --up:#8cc49a; --attack:#d99289; --skill:#93afd4; --power:#b8a0d4;
+  color-scheme:dark;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161616; --text:#e6e6e6; --sub:#9a9a9a; --line:#2e2e2e; --chip:#232323; --up:#8cc49a; --attack:#d99289; --skill:#93afd4; --power:#b8a0d4; color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#161616; --text:#e6e6e6; --sub:#9a9a9a; --line:#2e2e2e; --chip:#232323; --up:#8cc49a; --attack:#d99289; --skill:#93afd4; --power:#b8a0d4; color-scheme:dark}
-:root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
 html{font-size:125%}
@@ -24,8 +21,6 @@ img{max-width:100%}
 [hidden]{display:none!important}
 .wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
 h1{margin:0;font-size:1.5rem}
-.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
-#theme{font:inherit;font-size:.8rem;background:var(--chip);color:var(--text);border:1px solid var(--line);border-radius:4px;padding:3px 10px;cursor:pointer}
 .lead{margin:4px 0 0;font-size:.85rem;color:var(--sub)}
 .up{color:var(--up)}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:16px;padding-block:10px;border-bottom:1px solid var(--line);
@@ -54,9 +49,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 </head>
 <body>
 <div class="wrap">
-<div class="top"><div><h1>蛇の巫女 カード帳</h1>
-<p class="lead">Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新</p></div>
-<button type="button" id="theme">表示：自動</button></div>
+<h1>蛇の巫女 カード帳</h1>
+<p class="lead">Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新</p>
 <nav class="bar" aria-label="絞り込み">
   <div class="tabs" id="fr"><button type="button" data-v="all" aria-pressed="true">すべて</button><button type="button" data-v="basic" aria-pressed="false">基本</button><button type="button" data-v="common" aria-pressed="false">コモン</button><button type="button" data-v="uncommon" aria-pressed="false">アンコモン</button><button type="button" data-v="rare" aria-pressed="false">レア</button><button type="button" data-v="ancient" aria-pressed="false">エンシェント</button></div>
   <div class="tabs" id="ft"><button type="button" data-v="all" aria-pressed="true">全種類</button><button type="button" data-v="attack" aria-pressed="false">アタック</button><button type="button" data-v="skill" aria-pressed="false">スキル</button><button type="button" data-v="power" aria-pressed="false">パワー</button></div>
@@ -778,15 +772,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     });
   }
   bind("fr","r"); bind("ft","t");
-  var modes=["auto","light","dark"],names={auto:"自動",light:"白",dark:"黒"},tb=document.getElementById("theme");
-  function setTheme(m){
-    if(m==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",m);
-    tb.textContent="表示："+names[m]; tb.dataset.m=m;
-    try{localStorage.setItem("theme",m);}catch(e){}
-  }
-  var saved="auto"; try{saved=localStorage.getItem("theme")||"auto";}catch(e){}
-  setTheme(modes.indexOf(saved)>=0?saved:"auto");
-  tb.addEventListener("click",function(){setTheme(modes[(modes.indexOf(tb.dataset.m)+1)%3]);});
   document.getElementById("q").addEventListener("input",function(e){st.q=e.target.value;apply();});
   apply();
 })();
