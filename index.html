@@ -8,17 +8,19 @@
 <style>
 /* 飾らないカード一覧。端末の標準フォント、白地（ダークモードでは黒地）、絵と文字だけ */
 :root{
-  --bg:#ffffff; --text:#1f1f1f; --sub:#6a6a6a; --line:#e3e3e3; --chip:#f2f2f2; --up:#1d7f35;
+  --bg:#ffffff; --text:#1f1f1f; --sub:#6a6a6a; --line:#e3e3e3; --chip:#f2f2f2; --up:#1d7f35; --attack:#b3261e; --skill:#1f5fa8; --power:#7b3fb0;
   color-scheme:light;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){:root{--bg:#161616; --text:#e8e8e8; --sub:#9a9a9a; --line:#2e2e2e; --chip:#242424; --up:#6fd38a; color-scheme:dark}}
+@media (prefers-color-scheme:dark){:root{--bg:#161616; --text:#e8e8e8; --sub:#9a9a9a; --line:#2e2e2e; --chip:#242424; --up:#6fd38a; --attack:#ff8a80; --skill:#82b4f5; --power:#c79af0; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
+html{font-size:125%}
+@media (max-width:480px){html{font-size:106.25%}}
 body{margin:0;color:var(--text);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;line-height:1.6}
 img{max-width:100%}
 [hidden]{display:none!important}
-.wrap{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
 h1{margin:0;font-size:1.5rem}
 .lead{margin:4px 0 0;font-size:.85rem;color:var(--sub)}
 .up{color:var(--up)}
@@ -32,15 +34,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .shown{font-size:.8rem;color:var(--sub);margin-left:auto}
 .sec{margin-top:28px}
 .sec h2{margin:0 0 4px;font-size:1.1rem}
-.card{display:grid;grid-template-columns:132px 1fr;gap:14px;padding-block:12px;border-bottom:1px solid var(--line)}
-.card img,.noart{width:132px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
+.card{display:grid;grid-template-columns:200px 1fr;gap:18px;padding-block:16px;border-bottom:1px solid var(--line)}
+.card img,.noart{width:200px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
 .noart{display:grid;place-items:center;background:var(--chip);color:var(--sub);font-size:.75rem}
 .info{min-width:0}
 .card h3{margin:0;font-size:1rem}
-.meta{margin:0;font-size:.8rem;color:var(--sub)}
+.meta{margin:4px 0 2px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tag{font-size:.8rem;font-weight:600;line-height:1.5;padding:0 8px;border-radius:4px;background:var(--chip);border:1px solid var(--line);color:var(--text)}
+.tag.t-attack{color:var(--attack);border-color:currentColor}.tag.t-skill{color:var(--skill);border-color:currentColor}.tag.t-power{color:var(--power);border-color:currentColor}
+.note{font-size:.78rem;color:var(--sub)}
 .fx{margin:4px 0 0;font-size:.92rem}
 .foot{margin-top:40px;font-size:.75rem;color:var(--sub)}
-@media (max-width:480px){.card{grid-template-columns:96px 1fr;gap:10px}.card img,.noart{width:96px}.fx{font-size:.86rem}}
+@media (max-width:480px){.card{grid-template-columns:110px 1fr;gap:12px}.card img,.noart{width:110px}.fx{font-size:.86rem}}
 </style>
 </head>
 <body>
@@ -58,7 +63,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/strike_snake_miko.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>ストライク</h3>
-    <p class="meta">アタック・コスト1・初期デッキに3枚</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span><span class="note">初期デッキに3枚</span></p>
     <p class="fx">6<span class="up">（強化 9）</span>ダメージを与える。</p>
   </div>
 </article>
@@ -66,7 +71,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/defend_snake_miko.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>防御</h3>
-    <p class="meta">スキル・コスト1・初期デッキに5枚</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span><span class="note">初期デッキに5枚</span></p>
     <p class="fx">5<span class="up">（強化 8）</span>ブロックを得る。</p>
   </div>
 </article>
@@ -74,7 +79,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_fang.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒蛇</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">3<span class="up">（強化 5）</span>ダメージを与える。<br>毒 4<span class="up">（強化 5）</span>を付与する。</p>
   </div>
 </article>
@@ -82,7 +87,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tatari.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅 6<span class="up">（強化 8）</span>を2回付与する。</p>
   </div>
 </article></div></section><section class="sec" data-sec="common"><h2>コモン（20枚）</h2><div class="list">
@@ -90,7 +95,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/poison_mist.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒霧</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">すべての敵に毒 3<span class="up">（強化 4）</span>を付与する。</p>
   </div>
 </article>
@@ -98,7 +103,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/dripping_venom.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>滴る毒液</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">毒 5<span class="up">（強化 7）</span>を付与する。</p>
   </div>
 </article>
@@ -106,7 +111,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/juso.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪詛</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅 14<span class="up">（強化 18）</span>を付与する。</p>
   </div>
 </article>
@@ -114,7 +119,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/grudge_fang.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>怨嗟の牙</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">5<span class="up">（強化 7）</span>ダメージを与える。<br>破滅 8<span class="up">（強化 10）</span>を付与する。</p>
   </div>
 </article>
@@ -122,7 +127,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/nibble.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>噛みつき</h3>
-    <p class="meta">アタック・コスト0</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 0</span></p>
     <p class="fx">2<span class="up">（強化 3）</span>ダメージを与える。<br>毒 1<span class="up">（強化 2）</span>を付与する。</p>
   </div>
 </article>
@@ -130,7 +135,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/petty_curse.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>小さな呪い</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">破滅 7<span class="up">（強化 9）</span>を付与する。</p>
   </div>
 </article>
@@ -138,7 +143,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/coil.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>とぐろを巻く</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">9<span class="up">（強化 11）</span>ブロックを得る。</p>
   </div>
 </article>
@@ -146,7 +151,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/poison_needle.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒針</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">6<span class="up">（強化 8）</span>ダメージを与える。<br>この敵が毒を持っていれば、毒 4<span class="up">（強化 5）</span>を付与する。</p>
   </div>
 </article>
@@ -154,7 +159,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/forked_tongue.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>二股の舌</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">毒 2<span class="up">（強化 3）</span>を2回付与する。</p>
   </div>
 </article>
@@ -162,7 +167,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/cursed_whisper.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪いの囁き</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">すべての敵に破滅 9<span class="up">（強化 11）</span>を付与する。</p>
   </div>
 </article>
@@ -170,7 +175,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/constrict.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>締め上げ</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">7<span class="up">（強化 9）</span>ダメージを与える。<br>この敵の破滅がHPの半分以上なら、もう一度 7<span class="up">（強化 9）</span>ダメージを与える。</p>
   </div>
 </article>
@@ -178,7 +183,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/triple_strike.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>トリプルストライク</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">3<span class="up">（強化 4）</span>ダメージを3回与える。<br>（ストライク）</p>
   </div>
 </article>
@@ -186,7 +191,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/raise_scales.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>鱗を立てる</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">このターン、敏捷 3 を得る。<br>5<span class="up">（強化 8）</span>ブロックを得る。</p>
   </div>
 </article>
@@ -194,7 +199,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_veil.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒の帳</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">5<span class="up">（強化 7）</span>ブロックを得る。<br>ランダムな敵に毒 2<span class="up">（強化 3）</span>を付与する。</p>
   </div>
 </article>
@@ -202,7 +207,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/binding_wall.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪縛の壁</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">6<span class="up">（強化 7）</span>ブロックを得る。<br>破滅 6<span class="up">（強化 8）</span>を付与する。</p>
   </div>
 </article>
@@ -210,7 +215,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tail_strike.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>尾撃</h3>
-    <p class="meta">アタック・コスト0</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 0</span></p>
     <p class="fx">2<span class="up">（強化 3）</span>ダメージを与える。<br>活力 4<span class="up">（強化 5）</span>を得る。</p>
   </div>
 </article>
@@ -218,7 +223,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/shrine_garb.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>白衣の加護</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">2<span class="up">（強化 4）</span>ブロックを得る。<br>破滅を持つ敵がいれば、さらに 3 ブロックを得る。</p>
   </div>
 </article>
@@ -226,7 +231,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tongue_tip.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>舌先</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">カードを1枚引く。<br>ランダムな敵に毒 1<span class="up">（強化 2）</span>を付与する。</p>
   </div>
 </article>
@@ -234,7 +239,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/serpent_eye.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇の目</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>手札の毒か破滅を付与するカードを1枚アップグレードする。</p>
   </div>
 </article>
@@ -242,7 +247,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_bite.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒噛み</h3>
-    <p class="meta">アタック・コスト2<span class="up">（強化 1）</span></p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2<span class="up">（強化 1）</span></span></p>
     <p class="fx">この敵の毒に等しいダメージを与える（毒は減らない）。<br>戦闘中は実際のダメージを表示。</p>
   </div>
 </article></div></section><section class="sec" data-sec="uncommon"><h2>アンコモン（36枚）</h2><div class="list">
@@ -250,7 +255,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/molt.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>脱皮</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">HPを 3<span class="up">（強化 5）</span>回復する。<br>最大HPを1増やす。<br>廃棄。</p>
   </div>
 </article>
@@ -258,7 +263,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_circulation.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇毒の巡り</h3>
-    <p class="meta">パワー・コスト2</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2</span></p>
     <p class="fx">ターン開始時、ランダムな敵に毒 1 を 4<span class="up">（強化 5）</span>回付与する。</p>
   </div>
 </article>
@@ -266,7 +271,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/scale_guard.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>鱗の守り</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">毒か破滅を付与するカードをプレイするたび、2<span class="up">（強化 3）</span>ブロックを得る。</p>
   </div>
 </article>
@@ -274,7 +279,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/swallow.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呑み込む</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">9<span class="up">（強化 12）</span>ダメージに加え、敵の破滅の半分（切り捨て）の追加ダメージを与える。<br>戦闘中は実際のダメージを表示。</p>
   </div>
 </article>
@@ -282,7 +287,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tongue_flick.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>舌を這わす</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>このターン、次にプレイする毒か破滅を付与するカードのコストが0になる。</p>
   </div>
 </article>
@@ -290,7 +295,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_spread.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒の伝播</h3>
-    <p class="meta">スキル・コスト2</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
     <p class="fx">毒 2<span class="up">（強化 4）</span>を付与する。<br>この敵の毒と同じ量の毒を、他のすべての敵に付与する。</p>
   </div>
 </article>
@@ -298,7 +303,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/neurotoxin.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>神経毒</h3>
-    <p class="meta">スキル・コスト2</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
     <p class="fx">毒 10<span class="up">（強化 13）</span>を付与する。</p>
   </div>
 </article>
@@ -306,7 +311,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/doom_stack.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り重ね</h3>
-    <p class="meta">スキル・コスト2<span class="up">（強化 1）</span></p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2<span class="up">（強化 1）</span></span></p>
     <p class="fx">この敵の破滅を2倍にする。<br>廃棄。</p>
   </div>
 </article>
@@ -314,7 +319,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/white_snake_dance.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>白蛇の舞</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">（強化で天賦）<br>毒を付与するカードは毒が1増える。</p>
   </div>
 </article>
@@ -322,7 +327,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tatari_kotoba.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り詞</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅を付与するカードは破滅が 3<span class="up">（強化 5）</span>増える。</p>
   </div>
 </article>
@@ -330,7 +335,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/kotodama.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>言霊</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅 2<span class="up">（強化 4）</span>を付与する。<br>カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。<br>このカードのコストが1減少する（この戦闘中）。</p>
   </div>
 </article>
@@ -338,7 +343,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/inochiwake.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>命分け</h3>
-    <p class="meta">スキル・コスト1・マルチ専用</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span><span class="note">マルチ専用</span></p>
     <p class="fx">HPを10失う。<br>他のプレイヤー1人のHPを 15<span class="up">（強化 20）</span>回復する。</p>
   </div>
 </article>
@@ -346,7 +351,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/death_sentence.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>死の宣告</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅 10<span class="up">（強化 13）</span>を付与する。<br>この敵の破滅がHP以上なら、エナジー1を得て、HPを2回復する。</p>
   </div>
 </article>
@@ -354,7 +359,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/layered_scales.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>鱗の重ね</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">ターン終了時、3<span class="up">（強化 4）</span>ブロックを得る。</p>
   </div>
 </article>
@@ -362,7 +367,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/coiled_stance.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>とぐろの構え</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">9<span class="up">（強化 12）</span>ブロックを得る。このターンにプレイしたカード1枚につき3減る（9→6→3→0）。<br>このターン、筋力を4失う。<br>保留。</p>
   </div>
 </article>
@@ -370,7 +375,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/white_snake_blessing.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>白蛇の加護</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">プレート 5<span class="up">（強化 7）</span>を得る。<br>HPを2回復する。<br>廃棄。</p>
   </div>
 </article>
@@ -378,7 +383,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/curse_bite.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪噛</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">6ダメージに加え、このターンにプレイした毒か破滅を付与するカード1枚につき 5<span class="up">（強化 6）</span>ダメージを与える（このカード自身は数えない）。</p>
   </div>
 </article>
@@ -386,7 +391,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/meander.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇行</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>カードを1枚捨てる。</p>
   </div>
 </article>
@@ -394,7 +399,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/slip_out.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>脱け出る</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">エナジー1を得る。強化するとさらにカードを1枚引く。<br>廃棄。</p>
   </div>
 </article>
@@ -402,7 +407,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/rapid_bites.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>乱れ噛み</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">ランダムな敵に3ダメージを与え、毒 1 を付与する。これを 3<span class="up">（強化 4）</span>回行う。</p>
   </div>
 </article>
@@ -410,7 +415,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tail_sweep.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>薙ぎ払う尾</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">すべての敵に 6<span class="up">（強化 8）</span>ダメージを与える。<br>すべての敵に毒 2<span class="up">（強化 3）</span>を付与する。</p>
   </div>
 </article>
@@ -418,7 +423,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/vital_strike.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>急所狙い</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">15<span class="up">（強化 19）</span>ダメージを与える。<br>この敵が毒を持っていれば、エナジー1を得る。</p>
   </div>
 </article>
@@ -426,7 +431,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/gohei_sweep.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>大幣払い</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">3<span class="up">（強化 5）</span>ダメージを与え、カードを1枚引く。これを2回行う。<br>（1回の攻撃の2ヒットなので、活力は両方に乗る）</p>
   </div>
 </article>
@@ -434,7 +439,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/curse_contagion.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蔓延る穢れ</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">すべての敵に、それぞれが持つ毒と同じ量の破滅を付与する（毒は減らない）。<br>廃棄（強化で廃棄なし）。</p>
   </div>
 </article>
@@ -442,7 +447,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/prayer.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祈祷</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">8<span class="up">（強化 11）</span>ブロックを得る。<br>カードを1枚引く。<br>手札のカード1枚にエセリアルを付与する。</p>
   </div>
 </article>
@@ -450,7 +455,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/half_open_eyes.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>半眼</h3>
-    <p class="meta">スキル・コスト0</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
     <p class="fx">このターン、毒を付与するカードは毒が1、破滅を付与するカードは破滅が3増える。<br>強化で保留が付く。</p>
   </div>
 </article>
@@ -458,7 +463,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/ambush.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>待ち伏せ</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">7<span class="up">（強化 9）</span>ブロックを得る。<br>次のターン、カードを2枚引く。</p>
   </div>
 </article>
@@ -466,7 +471,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_gland.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒腺</h3>
-    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1<span class="up">（強化 0）</span></span></p>
     <p class="fx">毒か破滅を付与するカードをプレイするたび、ランダムな敵に毒 1 を付与する。</p>
   </div>
 </article>
@@ -474,7 +479,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/kagura.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>神楽</h3>
-    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1<span class="up">（強化 0）</span></span></p>
     <p class="fx">毒か破滅を付与するカードを3枚プレイするたび、カードを1枚引く。</p>
   </div>
 </article>
@@ -482,7 +487,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/curse_return.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪い返し</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">攻撃を受けるたび、攻撃した敵に破滅 3<span class="up">（強化 4）</span>を付与する。</p>
   </div>
 </article>
@@ -490,7 +495,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/curse_chain.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪いの連鎖</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">敵が破滅で倒れるたび、他のすべての敵に破滅 16<span class="up">（強化 19）</span>を付与する。</p>
   </div>
 </article>
@@ -498,7 +503,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/corrode.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>浸蝕</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">毒 3<span class="up">（強化 5）</span>を付与する。<br>カードを1枚引く。</p>
   </div>
 </article>
@@ -506,7 +511,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/grudge.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>怨念</h3>
-    <p class="meta">スキル・コスト2</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
     <p class="fx">破滅 9<span class="up">（強化 11）</span>を3回付与する。</p>
   </div>
 </article>
@@ -514,7 +519,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/cursed_venom_fang.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪毒の牙</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">4<span class="up">（強化 6）</span>ダメージを与える。<br>毒 3<span class="up">（強化 4）</span>と破滅 7<span class="up">（強化 9）</span>を付与する。</p>
   </div>
 </article>
@@ -522,7 +527,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/aramitama.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>荒魂</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">HPを回復するたび、このターン筋力 1<span class="up">（強化 2）</span>を得る。</p>
   </div>
 </article>
@@ -530,7 +535,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/wraith_claw.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>怨霊の爪</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">4<span class="up">（強化 6）</span>ダメージを与える。<br>この敵が破滅を持っていれば、破滅 12<span class="up">（強化 15）</span>を付与する。</p>
   </div>
 </article></div></section><section class="sec" data-sec="rare"><h2>レア（24枚）</h2><div class="list">
@@ -538,7 +543,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/century_curse.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>百年の祟り</h3>
-    <p class="meta">スキル・コスト3</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 3</span></p>
     <p class="fx">破滅 40<span class="up">（強化 55）</span>を付与する。<br>廃棄。</p>
   </div>
 </article>
@@ -546,7 +551,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/poison_curse.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒の祟り</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">敵の毒をすべて取り除き、その3倍の破滅を付与する。<br>強化で保留が付く。</p>
   </div>
 </article>
@@ -554,7 +559,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/serpent_glare.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇睨み</h3>
-    <p class="meta">スキル・コスト4<span class="up">（強化 3）</span></p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 4<span class="up">（強化 3）</span></span></p>
     <p class="fx">この敵をスタンさせる。<br>廃棄。</p>
   </div>
 </article>
@@ -562,7 +567,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_avatar.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇毒の化身</h3>
-    <p class="meta">パワー・コスト2</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2</span></p>
     <p class="fx">毒を付与するカードの毒が1.5倍（切り捨て）、強化で2倍になる。<br>2枚出しても2倍になる。</p>
   </div>
 </article>
@@ -570,7 +575,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/jusatsu.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪殺</h3>
-    <p class="meta">スキル・コスト2</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
     <p class="fx">破滅 16<span class="up">（強化 19）</span>を付与する。<br>この敵の破滅がHP以上なら、即座に倒す。</p>
   </div>
 </article>
@@ -578,7 +583,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/serpent_god_jaw.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇神の顎</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">8<span class="up">（強化 13）</span>ダメージを与える。<br>この敵の毒を1.5倍（切り捨て）にする。<br>その後、この敵の破滅をすべて取り除き、その1/3（切り捨て）の毒を付与する。廃棄。</p>
   </div>
 </article>
@@ -586,7 +591,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/white_snake_flash.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>白蛇の一閃</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">6<span class="up">（強化 8）</span>ダメージを与える。<br>この敵が毒と破滅の両方を持っていれば、ダメージが3倍（18／強化 24）になる。</p>
   </div>
 </article>
@@ -594,7 +599,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/oharae.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>大祓</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">すべての敵に 14<span class="up">（強化 18）</span>ダメージを与える。<br>自分の脱力・弱体・脆弱を取り除く。</p>
   </div>
 </article>
@@ -602,7 +607,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/serpent_embrace.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇の抱擁</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">3<span class="up">（強化 6）</span>ブロックに加え、すべての敵の破滅の合計の3分の1（切り捨て）のブロックを得る。<br>マルチでは破滅の部分だけ、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
   </div>
 </article>
@@ -610,7 +615,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/scale_armor.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>鱗の鎧</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">ターン開始時、ブロックがすべて消えず、3分の1（切り捨て）残るようになる。<br>強化で半分残る。</p>
   </div>
 </article>
@@ -618,7 +623,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/asclepius_staff.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>アスクレピオスの杖</h3>
-    <p class="meta">スキル・コスト3<span class="up">（強化 2）</span></p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 3<span class="up">（強化 2）</span></span></p>
     <p class="fx">すべての敵の毒の合計の1/2（切り捨て）だけ、HPを回復する。マルチではさらに、毒を使うプレイヤー（蛇の巫女・サイレント）の人数で割る。<br>廃棄。</p>
   </div>
 </article>
@@ -626,7 +631,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/venom_rush.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒走り</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">すべての敵の毒を、今すぐ 1<span class="up">（強化 2）</span>回発動させる（毒は減らない）。</p>
   </div>
 </article>
@@ -634,7 +639,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/katashiro.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>形代</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">この敵の破滅の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。<br>廃棄。</p>
   </div>
 </article>
@@ -642,7 +647,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tatari_tsuki.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り憑き</h3>
-    <p class="meta">パワー・コスト1</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10<span class="up">（強化 1/8、切り捨て）</span>だけ増える。<br>マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
   </div>
 </article>
@@ -650,7 +655,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/ushi_no_koku_mairi.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>丑の刻参り</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">2ダメージを与え、破滅 2 を付与する。これを 5<span class="up">（強化 7）</span>回行う。</p>
   </div>
 </article>
@@ -658,7 +663,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/inyou.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>陰陽</h3>
-    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1<span class="up">（強化 0）</span></span></p>
     <p class="fx">破滅を持つ敵が毒でHPを失うたび、失った量の半分（切り捨て）の破滅を得る。</p>
   </div>
 </article>
@@ -666,7 +671,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/judoku_ittai.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪毒一体</h3>
-    <p class="meta">パワー・コスト3<span class="up">（強化 2）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 3<span class="up">（強化 2）</span></span></p>
     <p class="fx">毒と破滅の両方を持つ敵は、毒と破滅の合計がHP以上なら、破滅で倒れる。</p>
   </div>
 </article>
@@ -674,7 +679,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/dokuhai_no_gi.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒杯の儀</h3>
-    <p class="meta">パワー・コスト2<span class="up">（強化 1）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2<span class="up">（強化 1）</span></span></p>
     <p class="fx">ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。<br>自分が毒で失うHPは半分になる。<br>自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。</p>
   </div>
 </article>
@@ -682,7 +687,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/gunjaranga.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>群蛇乱牙</h3>
-    <p class="meta">アタック・コスト2</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
     <p class="fx">7ダメージを与え、5ブロックを得る。<br>手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。<br>エセリアル。</p>
   </div>
 </article>
@@ -690,7 +695,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/twin_head.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>双頭</h3>
-    <p class="meta">パワー・コスト2</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2</span></p>
     <p class="fx">現在のHPの3分の1<span class="up">（強化 4分の1、切り捨て）</span>を失う。<br>毎ターン、最初にプレイする毒を付与するカードと、破滅を付与するカードが、それぞれもう1回発動する。</p>
   </div>
 </article>
@@ -698,7 +703,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/kamioroshi.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>神降ろし</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">このターン、毒か破滅を付与するカードのコストがすべて0になる。<br>カードを 1<span class="up">（強化 2）</span>枚引く。廃棄。</p>
   </div>
 </article>
@@ -706,7 +711,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/thousand_hands.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>千手の舞</h3>
-    <p class="meta">パワー・コスト1<span class="up">（強化 0）</span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1<span class="up">（強化 0）</span></span></p>
     <p class="fx">コスト0のカードをプレイするたび、カードを1枚引く（1ターン3回まで）。</p>
   </div>
 </article>
@@ -714,7 +719,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/tatari_god.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り神</h3>
-    <p class="meta">パワー・コスト3</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 3</span></p>
     <p class="fx">ターン開始時、すべての敵に破滅 8<span class="up">（強化 11）</span>を付与する。<br>バッファー 1 を得る。</p>
   </div>
 </article>
@@ -722,7 +727,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/great_prayer.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>大祈祷</h3>
-    <p class="meta">スキル・コスト2</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
     <p class="fx">7<span class="up">（強化 9）</span>ブロックを得る。<br>山札のカードを2枚選んで廃棄する。</p>
   </div>
 </article></div></section><section class="sec" data-sec="ancient"><h2>エンシェント（2枚）</h2><div class="list">
@@ -730,7 +735,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/great_tatari.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>大祟り</h3>
-    <p class="meta">スキル・コスト1</p>
+    <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
     <p class="fx">破滅 7<span class="up">（強化 9）</span>を3回付与する。<br>天賦。</p>
   </div>
 </article>
@@ -738,7 +743,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/yamata.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>八岐大蛇</h3>
-    <p class="meta">アタック・コスト1</p>
+    <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">敵1体に2<span class="up">（強化 3）</span>ダメージを与え、毒 1 を付与する。これを 8 回行う。<br>（毒蛇が「古びた歯」で変化するカード）</p>
   </div>
 </article></div></section>
