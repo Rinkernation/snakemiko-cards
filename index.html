@@ -20,8 +20,12 @@ body{margin:0;color:var(--text);font-family:system-ui,-apple-system,"Hiragino Sa
 img{max-width:100%}
 [hidden]{display:none!important}
 .wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px}
 h1{margin:0;font-size:1.5rem}
 .lead{margin:4px 0 0;font-size:.85rem;color:var(--sub)}
+.pages{display:flex;gap:4px;font-size:.85rem}
+.pages a{color:var(--sub);text-decoration:none;padding:2px 10px;border:1px solid var(--line);border-radius:4px}
+.pages a[aria-current="page"]{color:var(--bg);background:var(--text);border-color:var(--text)}
 .up{color:var(--up)}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:16px;padding-block:10px;border-bottom:1px solid var(--line);
   display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
@@ -33,24 +37,29 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .shown{font-size:.8rem;color:var(--sub);margin-left:auto}
 .sec{margin-top:28px}
 .sec h2{margin:0 0 4px;font-size:1.1rem}
-.card{display:grid;grid-template-columns:200px 1fr;gap:18px;padding-block:16px;border-bottom:1px solid var(--line)}
-.card img,.noart{width:200px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
-.noart{display:grid;place-items:center;background:var(--chip);color:var(--sub);font-size:.75rem}
-.info{min-width:0}
-.card h3{margin:0;font-size:1rem}
-.meta{margin:4px 0 2px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.noart{display:grid;place-items:center;background:var(--chip);color:var(--sub);font-size:.75rem;aspect-ratio:250/190}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .tag{font-size:.8rem;font-weight:600;line-height:1.5;padding:0 8px;border-radius:4px;background:var(--chip);border:1px solid var(--line);color:var(--text)}
 .tag.t-attack{color:var(--attack);border-color:currentColor}.tag.t-skill{color:var(--skill);border-color:currentColor}.tag.t-power{color:var(--power);border-color:currentColor}
 .note{font-size:.78rem;color:var(--sub)}
-.fx{margin:4px 0 0;font-size:.92rem}
 .foot{margin-top:40px;font-size:.75rem;color:var(--sub)}
-@media (max-width:480px){.card{grid-template-columns:110px 1fr;gap:12px}.card img,.noart{width:110px}.fx{font-size:.86rem}}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+
+.card{display:grid;grid-template-columns:200px 1fr;gap:18px;padding-block:16px;border-bottom:1px solid var(--line)}
+.card img,.card .noart{width:200px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
+.info{min-width:0}
+.card h3{margin:0;font-size:1rem}
+.card .meta{margin:4px 0 2px}
+.fx{margin:4px 0 0;font-size:.92rem}
+@media (max-width:480px){.card{grid-template-columns:110px 1fr;gap:12px}.card img,.card .noart{width:110px}.fx{font-size:.86rem}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>蛇の巫女 カード帳</h1>
-<p class="lead">Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新</p>
+<div class="top">
+  <div><h1>蛇の巫女 カード帳</h1><p class="lead">Slay the Spire 2 MOD v0.9.1・全86枚・2026-11-21 更新</p></div>
+  <nav class="pages" aria-label="ページ"><a href="./" aria-current="page">一覧</a><a href="grid.html">並べて見る</a></nav>
+</div>
 <nav class="bar" aria-label="絞り込み">
   <div class="tabs" id="fr"><button type="button" data-v="all" aria-pressed="true">すべて</button><button type="button" data-v="basic" aria-pressed="false">基本</button><button type="button" data-v="common" aria-pressed="false">コモン</button><button type="button" data-v="uncommon" aria-pressed="false">アンコモン</button><button type="button" data-v="rare" aria-pressed="false">レア</button><button type="button" data-v="ancient" aria-pressed="false">エンシェント</button></div>
   <div class="tabs" id="ft"><button type="button" data-v="all" aria-pressed="true">全種類</button><button type="button" data-v="attack" aria-pressed="false">アタック</button><button type="button" data-v="skill" aria-pressed="false">スキル</button><button type="button" data-v="power" aria-pressed="false">パワー</button></div>
