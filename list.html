@@ -46,7 +46,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :focus-visible{outline:2px solid var(--text);outline-offset:2px}
 
 .card{display:grid;grid-template-columns:200px 1fr;gap:18px;padding-block:16px;border-bottom:1px solid var(--line)}
-.card img,.card .noart{width:200px;height:auto;aspect-ratio:250/190;border-radius:3px;display:block}
+.card img,.card .noart{width:200px;height:auto;aspect-ratio:250/190;object-fit:cover;object-position:50% 30%;border-radius:3px;display:block}
 .info{min-width:0}
 .card h3{margin:0;font-size:1rem}
 .yomi{margin-left:10px;font-size:.78rem;font-weight:400;color:var(--sub)}
