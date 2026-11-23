@@ -58,11 +58,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <body>
 <div class="wrap">
 <div class="top">
-  <div><h1>蛇の巫女 カード帳</h1><p class="lead">Slay the Spire 2 MOD v0.9.2・全86枚・2026-11-22 更新</p></div>
+  <div><h1>蛇の巫女 カード帳</h1><p class="lead">Slay the Spire 2 MOD v0.9.4・全87枚・2026-11-23 更新</p></div>
   <nav class="pages" aria-label="ページ"><a href="./">並べて見る</a><a href="list.html" aria-current="page">詳細</a></nav>
 </div>
 <nav class="bar" aria-label="絞り込み">
-  <div class="tabs" id="fr"><button type="button" data-v="all" aria-pressed="true">すべて</button><button type="button" data-v="basic" aria-pressed="false">基本</button><button type="button" data-v="common" aria-pressed="false">コモン</button><button type="button" data-v="uncommon" aria-pressed="false">アンコモン</button><button type="button" data-v="rare" aria-pressed="false">レア</button><button type="button" data-v="ancient" aria-pressed="false">エンシェント</button></div>
+  <div class="tabs" id="fr"><button type="button" data-v="all" aria-pressed="true">すべて</button><button type="button" data-v="basic" aria-pressed="false">基本</button><button type="button" data-v="common" aria-pressed="false">コモン</button><button type="button" data-v="uncommon" aria-pressed="false">アンコモン</button><button type="button" data-v="rare" aria-pressed="false">レア</button><button type="button" data-v="ancient" aria-pressed="false">エンシェント</button><button type="button" data-v="status" aria-pressed="false">状態異常</button></div>
   <div class="tabs" id="ft"><button type="button" data-v="all" aria-pressed="true">全種類</button><button type="button" data-v="attack" aria-pressed="false">アタック</button><button type="button" data-v="skill" aria-pressed="false">スキル</button><button type="button" data-v="power" aria-pressed="false">パワー</button></div>
   <input id="q" type="search" placeholder="名前・効果で探す（例：破滅）" aria-label="名前・効果で探す">
   <span class="shown" id="shown"></span>
@@ -196,12 +196,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">3<span class="up">（強化 4）</span>ダメージを3回与える。<br>（ストライク）</p>
   </div>
 </article>
-<article class="card" data-rarity="common" data-type="skill" data-name="鱗を立てるうろこをたてる" data-text="このターン、敏捷 3 を得る。 5（強化 8）ブロックを得る。">
+<article class="card" data-rarity="common" data-type="skill" data-name="鱗を立てるうろこをたてる" data-text="このターン、敏捷 2 を得る。 6（強化 9）ブロックを得る。">
   <img src="img/raise_scales.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>鱗を立てる<span class="yomi">うろこをたてる</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
-    <p class="fx">このターン、敏捷 3 を得る。<br>5<span class="up">（強化 8）</span>ブロックを得る。</p>
+    <p class="fx">このターン、敏捷 2 を得る。<br>6<span class="up">（強化 9）</span>ブロックを得る。</p>
   </div>
 </article>
 <article class="card" data-rarity="common" data-type="skill" data-name="毒の帳どくのとばり" data-text="5（強化 7）ブロックを得る。 ランダムな敵に毒 2（強化 3）を付与する。">
@@ -260,12 +260,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">この敵の毒に等しいダメージを与える（毒は減らない）。<br>戦闘中は実際のダメージを表示。</p>
   </div>
 </article></div></section><section class="sec" data-sec="uncommon"><h2>アンコモン（36枚）</h2><div class="list">
-<article class="card" data-rarity="uncommon" data-type="skill" data-name="脱皮だっぴ" data-text="HPを 3（強化 5）回復する。 最大HPを1増やす。 廃棄。">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="脱皮だっぴ" data-text="HPを 3（強化 5）回復する。 最大HPを1増やす。 蛇の抜け殻を1枚山札に加える。 廃棄。">
   <img src="img/molt.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>脱皮<span class="yomi">だっぴ</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
-    <p class="fx">HPを 3<span class="up">（強化 5）</span>回復する。<br>最大HPを1増やす。<br>廃棄。</p>
+    <p class="fx">HPを 3<span class="up">（強化 5）</span>回復する。<br>最大HPを1増やす。<br>蛇の抜け殻を1枚山札に加える。<br>廃棄。</p>
   </div>
 </article>
 <article class="card" data-rarity="uncommon" data-type="power" data-name="蛇毒の巡りじゃどくのめぐり" data-text="ターン開始時、ランダムな敵に毒 1 を 4（強化 5）回付与する。">
@@ -308,12 +308,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">毒 2<span class="up">（強化 4）</span>を付与する。<br>この敵の毒と同じ量の毒を、他のすべての敵に付与する。</p>
   </div>
 </article>
-<article class="card" data-rarity="uncommon" data-type="skill" data-name="神経毒しんけいどく" data-text="毒 10（強化 13）を付与する。">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="神経毒しんけいどく" data-text="毒 11（強化 15）を付与する。">
   <img src="img/neurotoxin.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>神経毒<span class="yomi">しんけいどく</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 2</span></p>
-    <p class="fx">毒 10<span class="up">（強化 13）</span>を付与する。</p>
+    <p class="fx">毒 11<span class="up">（強化 15）</span>を付与する。</p>
   </div>
 </article>
 <article class="card" data-rarity="uncommon" data-type="skill" data-name="祟り重ねたたりがさね" data-text="この敵の破滅を2倍にする。 廃棄。">
@@ -332,28 +332,28 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">（強化で天賦）<br>毒を付与するカードは毒が1増える。</p>
   </div>
 </article>
-<article class="card" data-rarity="uncommon" data-type="power" data-name="祟り詞たたりことば" data-text="破滅を付与するカードは破滅が 3（強化 5）増える。">
+<article class="card" data-rarity="uncommon" data-type="power" data-name="祟り詞たたりことば" data-text="破滅を付与するカードは破滅が 3（強化 4）増える。">
   <img src="img/tatari_kotoba.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り詞<span class="yomi">たたりことば</span></h3>
     <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
-    <p class="fx">破滅を付与するカードは破滅が 3<span class="up">（強化 5）</span>増える。</p>
+    <p class="fx">破滅を付与するカードは破滅が 3<span class="up">（強化 4）</span>増える。</p>
   </div>
 </article>
-<article class="card" data-rarity="uncommon" data-type="skill" data-name="言霊ことだま" data-text="破滅 2（強化 4）を付与する。 カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。 このカードのコストが1減少する（この戦闘中）。">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="言霊ことだま" data-text="破滅 1（強化 2）を付与する。 カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。 このカードのコストが1減少する（この戦闘中）。">
   <img src="img/kotodama.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>言霊<span class="yomi">ことだま</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span></p>
-    <p class="fx">破滅 2<span class="up">（強化 4）</span>を付与する。<br>カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。<br>このカードのコストが1減少する（この戦闘中）。</p>
+    <p class="fx">破滅 1<span class="up">（強化 2）</span>を付与する。<br>カードを1枚引き、HPを1回復する（回復は1ターンに1回まで）。<br>このカードのコストが1減少する（この戦闘中）。</p>
   </div>
 </article>
-<article class="card" data-rarity="uncommon" data-type="skill" data-name="命分けいのちわけ" data-text="HPを10失う。 他のプレイヤー1人のHPを 15（強化 20）回復する。">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="命分けいのちわけ" data-text="HPを10失う。 他のプレイヤー1人のHPを 15（強化 18）回復する。">
   <img src="img/inochiwake.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>命分け<span class="yomi">いのちわけ</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 1</span><span class="note">マルチ専用</span></p>
-    <p class="fx">HPを10失う。<br>他のプレイヤー1人のHPを 15<span class="up">（強化 20）</span>回復する。</p>
+    <p class="fx">HPを10失う。<br>他のプレイヤー1人のHPを 15<span class="up">（強化 18）</span>回復する。</p>
   </div>
 </article>
 <article class="card" data-rarity="uncommon" data-type="skill" data-name="死の宣告しのせんこく" data-text="破滅 10（強化 13）を付与する。 この敵の破滅がHP以上なら、エナジー1を得て、HPを2回復する。">
@@ -396,12 +396,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">6ダメージに加え、このターンにプレイした毒か破滅を付与するカード1枚につき 5<span class="up">（強化 6）</span>ダメージを与える（このカード自身は数えない）。</p>
   </div>
 </article>
-<article class="card" data-rarity="uncommon" data-type="skill" data-name="蛇行だこう" data-text="カードを 2（強化 3）枚引く。 カードを1枚捨てる。">
+<article class="card" data-rarity="uncommon" data-type="skill" data-name="蛇行だこう" data-text="カードを 2（強化 3）枚引く。 カードを1枚捨てる。 2回目で廃棄（この戦闘中。1回使うと「次で廃棄」と出る）。">
   <img src="img/meander.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>蛇行<span class="yomi">だこう</span></h3>
     <p class="meta"><span class="tag t-skill">スキル</span><span class="tag">コスト 0</span></p>
-    <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>カードを1枚捨てる。</p>
+    <p class="fx">カードを 2<span class="up">（強化 3）</span>枚引く。<br>カードを1枚捨てる。<br>2回目で廃棄（この戦闘中。1回使うと「次で廃棄」と出る）。</p>
   </div>
 </article>
 <article class="card" data-rarity="uncommon" data-type="skill" data-name="脱け出るぬけでる" data-text="エナジー1を得る。強化するとさらにカードを1枚引く。 廃棄。">
@@ -652,12 +652,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="fx">この敵の破滅の1/4（切り捨て）を取り除き、取り除いた分の半分（強化で全部）だけHPを回復する。<br>廃棄。</p>
   </div>
 </article>
-<article class="card" data-rarity="rare" data-type="power" data-name="祟り憑きたたりつき" data-text="破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10（強化 1/8、切り捨て）だけ増える。 マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
+<article class="card" data-rarity="rare" data-type="power" data-name="祟り憑きたたりつき" data-text="破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/16（強化 1/12、切り捨て）だけ増える。 マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。">
   <img src="img/tatari_tsuki.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>祟り憑き<span class="yomi">たたりつき</span></h3>
     <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 1</span></p>
-    <p class="fx">破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/10<span class="up">（強化 1/8、切り捨て）</span>だけ増える。<br>マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
+    <p class="fx">破滅を持つ敵へのアタックが、1ヒットごとにその敵の破滅の1/16<span class="up">（強化 1/12、切り捨て）</span>だけ増える。<br>マルチでは、破滅を使うプレイヤー（蛇の巫女・ネクロバインダー）の人数で割る。</p>
   </div>
 </article>
 <article class="card" data-rarity="rare" data-type="attack" data-name="丑の刻参りうしのこくまいり" data-text="2ダメージを与え、破滅 2 を付与する。これを 5（強化 7）回行う。">
@@ -680,24 +680,24 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <img src="img/judoku_ittai.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>呪毒一体<span class="yomi">じゅどくいったい</span></h3>
-    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 3<span class="up">（強化 2）</span></span></p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 3<span class="up">（強化 2）</span></span><span class="note">ソロ専用</span></p>
     <p class="fx">毒と破滅の両方を持つ敵は、毒と破滅の合計がHP以上になった瞬間、破滅で倒れる。</p>
   </div>
 </article>
-<article class="card" data-rarity="rare" data-type="power" data-name="毒杯の儀どくはいのぎ" data-text="ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。 自分が毒で失うHPは半分になる。 自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。">
+<article class="card" data-rarity="rare" data-type="power" data-name="毒杯の儀どくはいのぎ" data-text="HPを 6（強化 3）失う。 ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。 自分が毒で失うHPは半分になる。 自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。">
   <img src="img/dokuhai_no_gi.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>毒杯の儀<span class="yomi">どくはいのぎ</span></h3>
-    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2<span class="up">（強化 1）</span></span></p>
-    <p class="fx">ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。<br>自分が毒で失うHPは半分になる。<br>自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。</p>
+    <p class="meta"><span class="tag t-power">パワー</span><span class="tag">コスト 2</span></p>
+    <p class="fx">HPを 6<span class="up">（強化 3）</span>失う。<br>ターン開始時、エナジー1を得て、カードを1枚多く引き、自分に毒 3 を付与する。<br>自分が毒で失うHPは半分になる。<br>自分の毒が発動するたび、すべての敵に自分の毒と同じ量の毒を付与する。</p>
   </div>
 </article>
-<article class="card" data-rarity="rare" data-type="attack" data-name="群蛇乱牙ぐんじゃらんが" data-text="7ダメージを与え、5ブロックを得る。 手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。 エセリアル。">
+<article class="card" data-rarity="rare" data-type="attack" data-name="群蛇乱牙ぐんじゃらんが" data-text="7ダメージを与え、4ブロックを得る。 手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。 エセリアル。">
   <img src="img/gunjaranga.png" alt="" loading="lazy" width="250" height="190">
   <div class="info">
     <h3>群蛇乱牙<span class="yomi">ぐんじゃらんが</span></h3>
     <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 2</span></p>
-    <p class="fx">7ダメージを与え、5ブロックを得る。<br>手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。<br>エセリアル。</p>
+    <p class="fx">7ダメージを与え、4ブロックを得る。<br>手札に噛みつきと舌先を1枚ずつ加える（強化で、強化済みのものを加える）。<br>エセリアル。</p>
   </div>
 </article>
 <article class="card" data-rarity="rare" data-type="power" data-name="双頭そうとう" data-text="現在のHPの3分の1（強化 4分の1、切り捨て）を失う。 毎ターン、最初にプレイする毒を付与するカードと、破滅を付与するカードが、それぞれもう1回発動する。">
@@ -754,6 +754,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <h3>八岐大蛇<span class="yomi">やまたのおろち</span></h3>
     <p class="meta"><span class="tag t-attack">アタック</span><span class="tag">コスト 1</span></p>
     <p class="fx">敵1体に2<span class="up">（強化 3）</span>ダメージを与え、毒 1 を付与する。これを 8 回行う。<br>（毒蛇が「古びた歯」で変化するカード）</p>
+  </div>
+</article></div></section><section class="sec" data-sec="status"><h2>状態異常（1枚）</h2><div class="list">
+<article class="card" data-rarity="status" data-type="other" data-name="蛇の抜け殻へびのぬけがら" data-text="プレイ不可。">
+  <img src="img/shed_skin.png" alt="" loading="lazy" width="250" height="190">
+  <div class="info">
+    <h3>蛇の抜け殻<span class="yomi">へびのぬけがら</span></h3>
+    <p class="meta"><span class="tag t-other">状態異常</span></p>
+    <p class="fx">プレイ不可。</p>
   </div>
 </article></div></section>
 <p class="foot"></p>
